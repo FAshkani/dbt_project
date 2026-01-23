@@ -1,0 +1,293 @@
+version: 2
+models:
+- name: cities
+  description: ''
+  columns:
+  - name: CityID
+    data_type: int
+    description: ''
+  - name: CityName
+    data_type: string
+    description: ''
+  - name: StateProvinceID
+    data_type: int
+    description: ''
+  - name: LatestRecordedPopulation
+    data_type: int
+    description: ''
+  - name: LastEditedBy
+    data_type: string
+    description: ''
+  - name: ValidFrom
+    data_type: timestamp
+    description: ''
+  - name: ValidTo
+    data_type: timestamp
+    description: ''
+- name: countries
+  description: ''
+  columns:
+  - name: CountryID
+    data_type: int
+    description: ''
+  - name: CountryName
+    data_type: string
+    description: ''
+  - name: FormalName
+    data_type: string
+    description: ''
+  - name: IsoAlpha3Code
+    data_type: string
+    description: ''
+  - name: IsoNumericCode
+    data_type: string
+    description: ''
+  - name: CountryType
+    data_type: string
+    description: ''
+  - name: LatestRecordedPopulation
+    data_type: bigint
+    description: ''
+  - name: Continent
+    data_type: string
+    description: ''
+  - name: Region
+    data_type: string
+    description: ''
+  - name: Subregion
+    data_type: string
+    description: ''
+  - name: LastEditedBy
+    data_type: string
+    description: ''
+  - name: ValidFrom
+    data_type: timestamp
+    description: ''
+  - name: ValidTo
+    data_type: timestamp
+    description: ''
+  - name: HappinessIndex
+    data_type: int
+    description: ''
+- name: ddl_script_executions
+  description: ''
+  columns:
+  - name: script_id
+    data_type: string
+    description: ''
+  - name: script_name
+    data_type: string
+    description: ''
+  - name: execution_status
+    data_type: string
+    description: ''
+  - name: update_date
+    data_type: timestamp
+    description: ''
+- name: departments
+  description: ''
+  columns:
+  - name: DepartmentID
+    data_type: int
+    description: ''
+  - name: Name
+    data_type: string
+    description: ''
+  - name: GroupName
+    data_type: string
+    description: ''
+  - name: ModifiedDate
+    data_type: timestamp
+    description: ''
+- name: orders
+  description: ''
+  columns:
+  - name: SalesOrderID
+    data_type: int
+    description: ''
+  - name: RevisionNumber
+    data_type: int
+    description: ''
+  - name: OrderDate
+    data_type: timestamp
+    description: ''
+  - name: DueDate
+    data_type: timestamp
+    description: ''
+  - name: ShipDate
+    data_type: timestamp
+    description: ''
+  - name: Status
+    data_type: int
+    description: ''
+  - name: OnlineOrderFlag
+    data_type: boolean
+    description: ''
+  - name: SalesOrderNumber
+    data_type: string
+    description: ''
+  - name: PurchaseOrderNumber
+    data_type: string
+    description: ''
+  - name: AccountNumber
+    data_type: string
+    description: ''
+  - name: CustomerID
+    data_type: int
+    description: ''
+  - name: SalesPersonID
+    data_type: int
+    description: ''
+  - name: TerritoryID
+    data_type: int
+    description: ''
+  - name: BillToAddressID
+    data_type: int
+    description: ''
+  - name: ShipToAddressID
+    data_type: int
+    description: ''
+  - name: ShipMethodID
+    data_type: int
+    description: ''
+  - name: CreditCardID
+    data_type: int
+    description: ''
+  - name: CreditCardApprovalCode
+    data_type: string
+    description: ''
+  - name: CurrencyRateID
+    data_type: int
+    description: ''
+  - name: SubTotal
+    data_type: float
+    description: ''
+  - name: TaxAmt
+    data_type: float
+    description: ''
+  - name: Freight
+    data_type: float
+    description: ''
+  - name: TotalDue
+    data_type: float
+    description: ''
+  - name: Comment
+    data_type: string
+    description: ''
+  - name: rowguid
+    data_type: string
+    description: ''
+  - name: ModifiedDate
+    data_type: timestamp
+    description: ''
+- name: products
+  description: ''
+  columns:
+  - name: ProductID
+    data_type: int
+    description: ''
+  - name: Name
+    data_type: string
+    description: ''
+  - name: ProductNumber
+    data_type: string
+    description: ''
+  - name: MakeFlag
+    data_type: boolean
+    description: ''
+  - name: FinishedGoodsFlag
+    data_type: boolean
+    description: ''
+  - name: Color
+    data_type: string
+    description: ''
+  - name: SafetyStockLevel
+    data_type: int
+    description: ''
+  - name: ReorderPoint
+    data_type: int
+    description: ''
+  - name: StandardCost
+    data_type: float
+    description: ''
+  - name: ListPrice
+    data_type: float
+    description: ''
+  - name: Size
+    data_type: string
+    description: ''
+  - name: SizeUnitMeasureCode
+    data_type: string
+    description: ''
+  - name: WeightUnitMeasureCode
+    data_type: string
+    description: ''
+  - name: Weight
+    data_type: float
+    description: ''
+  - name: DaysToManufacture
+    data_type: int
+    description: ''
+  - name: ProductLine
+    data_type: string
+    description: ''
+  - name: Class
+    data_type: string
+    description: ''
+  - name: Style
+    data_type: string
+    description: ''
+  - name: ProductSubcategoryID
+    data_type: int
+    description: ''
+  - name: ProductModelID
+    data_type: int
+    description: ''
+  - name: SellStartDate
+    data_type: timestamp
+    description: ''
+  - name: SellEndDate
+    data_type: timestamp
+    description: ''
+  - name: DiscontinuedDate
+    data_type: string
+    description: ''
+  - name: rowguid
+    data_type: string
+    description: ''
+  - name: ModifiedDate
+    data_type: timestamp
+    description: ''
+- name: territories
+  description: ''
+  columns:
+  - name: TerritoryID
+    data_type: int
+    description: ''
+  - name: Name
+    data_type: string
+    description: ''
+  - name: CountryRegionCode
+    data_type: string
+    description: ''
+  - name: Group
+    data_type: string
+    description: ''
+  - name: SalesYTD
+    data_type: float
+    description: ''
+  - name: SalesLastYear
+    data_type: float
+    description: ''
+  - name: CostYTD
+    data_type: int
+    description: ''
+  - name: CostLastYear
+    data_type: int
+    description: ''
+  - name: rowguid
+    data_type: string
+    description: ''
+  - name: ModifiedDate
+    data_type: timestamp
+    description: ''

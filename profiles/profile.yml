@@ -1,0 +1,20 @@
+if_demo:
+  outputs:
+    test:
+      authentication: CLI
+      connect_retries: 0
+      connect_timeout: 10
+      endpoint: https://api.fabric.microsoft.com/v1
+      lakehouse: lh_bronze
+      lakehousedatapath: /lakehouse
+      lakehouseid: 261b15565-2744-4111-b3a6-71088dfd7f09
+      log_lakehouse: lh_log
+      method: livy
+      retry_all: true
+      schema: dbo
+      threads: 1
+      type: fabricsparknb
+      workspaceid: 9b1f29a51a-0bbd-4922-90dc-edaf9b97dee0
+      workspacename: EDAA_SANDBOX_MAIN_DEV_001
+      _lakehouse_prefix: lh_bronze
+  target: test
