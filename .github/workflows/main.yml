@@ -2,9 +2,9 @@
 name: Build & Publish dbt Docs to GitHub Pages
 
 on:
-  workflow_dispatch: {}      # Run from Actions → Run workflow button
+  workflow_dispatch: {}
   push:
-    branches: ["main"]       # Runs on any push to main
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -14,24 +14,52 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Setup Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dbt-core only
+      - name: Upgrade pip tooling
         run: |
-          python -m pip install --upgrade pip
-          pip install "dbt-core==1.7.*"
-        
-      - name: Compile & Generate dbt docs (no DB needed)
+          python -m pip install --upgrade pip setuptools wheel
+
+      # Use DuckDB adapter so dbt can parse/compile without an external database
+      - name: Install dbt (duckdb)
         run: |
-          dbt compile
-          dbt docs generate
+          pip install "dbt-duckdb==1.7.*"
+
+      # Create the profiles directory and write a minimal DuckDB profile
+      - name: Write dbt profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml << 'YAML'
+          ci_profile:
+            target: ci
+            outputs:
+              ci:
+                type: duckdb
+                path: ./ci.duckdb
+                schema: analytics
+                threads: 4
+          YAML
+          echo "Wrote ~/.dbt/profiles.yml:"
+          cat ~/.dbt/profiles.yml
+
+      # Optional: install dbt packages only if packages.yml exists
+      - name: Install dbt packages (conditional)
+        if: ${{ hashFiles('packages.yml') != '' }}
+        run: dbt deps
+
+      - name: Compile & Generate dbt docs
+        run: |
+          # Use the profile we just created
+          dbt compile --profile ci_profile --target ci
+          dbt docs generate --profile ci_profile --target ci
 
       - name: Prepare static site
         run: |
@@ -49,6 +77,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deploy
