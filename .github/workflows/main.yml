@@ -79,10 +79,6 @@ jobs:
         with:
           enablement: true
 
-      - name: Upload docs artifact for Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
 
      # Step 1: Configure Pages (sets up the environment)
       - name: Configure Pages
@@ -93,7 +89,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
-
+          overwrite: true
  
 # Step 3: Deploy to Pages
   deploy:
