@@ -4435,3 +4435,39 @@ There are 1 unused configuration paths:
 [0m21:25:22.689290 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting botocore to DEBUG
 [0m21:25:22.689290 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting boto3 to DEBUG
 [0m21:25:22.690290 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting Microsoft Fabric-Spark.connector to DEBUG
+[0m22:18:54.131454 [error] [MainThread]: Encountered an error:
+
+[0m22:18:54.190778 [error] [MainThread]: Traceback (most recent call last):
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 178, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 272, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 303, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 350, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\main.py", line 307, in docs_serve
+    results = task.run()
+              ^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\task\docs\serve.py", line 29, in run
+    httpd.serve_forever()
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 235, in serve_forever
+    ready = selector.select(poll_interval)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\selectors.py", line 323, in select
+    r, w, _ = self._select(self._readers, self._writers, [], timeout)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\selectors.py", line 314, in _select
+    r, w, x = select.select(r, w, w, timeout)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+[0m22:18:54.199756 [debug] [MainThread]: Command `dbt docs serve` failed at 22:18:54.199756 after 3211.84 seconds
+[0m22:18:54.201757 [debug] [MainThread]: Flushing usage events
