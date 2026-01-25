@@ -61,6 +61,13 @@ jobs:
           dbt compile --profile ci_profile --target ci
           dbt docs generate --profile ci_profile --target ci
 
+      # Sanity: ensure index.html exists
+      - name: Verify docs output
+        run: |
+          test -f target/index.html || (echo "target/index.html is missing" && exit 1)
+          echo "Docs generated. Listing target/:"
+          ls -la target | head -n 100
+
       - name: Prepare static site
         run: |
           mkdir -p site
@@ -71,14 +78,25 @@ jobs:
         with:
           path: site
 
+     # Step 1: Configure Pages (sets up the environment)
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      # Step 2: Upload artifact to Pages
+      - name: Upload docs artifact for Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+ 
+# Step 3: Deploy to Pages
   deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
-        id: deploy
+        id: deployment
         uses: actions/deploy-pages@v4
