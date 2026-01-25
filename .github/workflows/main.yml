@@ -2,14 +2,9 @@
 name: Build & Publish dbt Docs to GitHub Pages
 
 on:
+  workflow_dispatch: {}      # Run from Actions → Run workflow button
   push:
-    branches: ["main"]
-    paths:
-      - "models/**"
-      - "analyses/**"
-      - "dbt_project.yml"
-      - "packages.yml"
-  workflow_dispatch: {}
+    branches: ["main"]       # Runs on any push to main
 
 permissions:
   contents: read
@@ -19,7 +14,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -29,15 +23,15 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dbt-core only (no database adapter needed)
+      - name: Install dbt-core only
         run: |
           python -m pip install --upgrade pip
           pip install "dbt-core==1.7.*"
 
-      - name: Install dbt packages
-        run: dbt deps
+      - name: Install dbt packages (safe even if none)
+        run: dbt deps || echo "No packages.yml; continuing"
 
-      - name: Compile & Generate dbt docs (no database required)
+      - name: Compile & Generate dbt docs (no DB needed)
         run: |
           dbt compile
           dbt docs generate
@@ -47,7 +41,7 @@ jobs:
           mkdir -p site
           cp -R target/* site/
 
-      - name: Upload docs artifact
+      - name: Upload docs artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
@@ -58,7 +52,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
-
     steps:
       - name: Deploy to GitHub Pages
         id: deploy
