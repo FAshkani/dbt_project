@@ -4421,3 +4421,17 @@ There are 1 unused configuration paths:
 [0m21:24:49.245119 [info ] [MainThread]: Catalog written to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\catalog.json
 [0m21:24:49.246126 [debug] [MainThread]: Command `dbt docs generate` succeeded at 21:24:49.246126 after 4.10 seconds
 [0m21:24:49.246126 [debug] [MainThread]: Flushing usage events
+[0m21:25:22.411457 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 21:25:22.450670 | 7759884c-900f-4706-a5c4-942997b92b9f ==============================
+[0m21:25:22.450670 [info ] [MainThread]: Running with dbt=1.10.15
+[0m21:25:22.451667 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\fashkani\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt docs serve --port 808', 'use_experimental_parser': 'False', 'log_path': 'C:\\Projects\\Fabric_Framework\\Baseline_Project\\dbt_project\\logs'}
+[0m21:25:22.678281 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting fabricspark.connector to DEBUG
+[0m21:25:22.678281 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting botocore to DEBUG
+[0m21:25:22.679296 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting boto3 to DEBUG
+[0m21:25:22.679296 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting Microsoft Fabric-Spark.connector to DEBUG
+[0m21:25:22.689290 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting fabricsparknb.connector to DEBUG
+[0m21:25:22.689290 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting botocore to DEBUG
+[0m21:25:22.689290 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting boto3 to DEBUG
+[0m21:25:22.690290 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting Microsoft Fabric-Spark.connector to DEBUG
