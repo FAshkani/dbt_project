@@ -28,8 +28,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install "dbt-core==1.7.*"
 
-      - name: Install dbt packages (safe even if none)
-
       - name: Compile & Generate dbt docs (no DB needed)
         run: |
           dbt compile
