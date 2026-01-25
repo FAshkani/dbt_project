@@ -73,6 +73,12 @@ jobs:
           mkdir -p site
           cp -R target/* site/
 
+      #  Create/enable Pages site automatically on first deploy
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - name: Upload docs artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
