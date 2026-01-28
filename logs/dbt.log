@@ -4641,3 +4641,19 @@ PermissionError: [WinError 32] The process cannot access the file because it is 
 
 [0m10:20:58.345659 [debug] [MainThread]: Command `cli deps` failed at 10:20:58.345659 after 0.33 seconds
 [0m10:20:58.346718 [debug] [MainThread]: Flushing usage events
+[0m10:41:52.301735 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 10:41:52.348245 | 3b174db4-7002-42fb-ad17-f73d5451700a ==============================
+[0m10:41:52.348245 [info ] [MainThread]: Running with dbt=1.10.15
+[0m10:41:52.349244 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\fashkani\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'invocation_command': 'dbt ', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'c:\\Projects\\Fabric_Framework\\Baseline_Project\\dbt_project\\logs'}
+[0m10:41:52.525513 [debug] [MainThread]: Set downloads directory='C:\Users\fashkani\AppData\Local\Temp\dbt-downloads-j3lohtza'
+[0m10:41:52.525513 [debug] [MainThread]: Making package index registry request: GET https://hub.getdbt.com/api/v1/index.json
+[0m10:41:52.855548 [debug] [MainThread]: Response from registry index: GET https://hub.getdbt.com/api/v1/index.json 200
+[0m10:41:52.857572 [debug] [MainThread]: Making package registry request: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json
+[0m10:41:53.145074 [debug] [MainThread]: Response from registry: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json 200
+[0m10:41:53.150081 [info ] [MainThread]: Installing dbt-labs/dbt_utils
+[0m10:41:53.915136 [info ] [MainThread]: Installed from version 1.3.3
+[0m10:41:53.916135 [info ] [MainThread]: Up to date!
+[0m10:41:53.918134 [debug] [MainThread]: Command `cli deps` succeeded at 10:41:53.918134 after 1.67 seconds
+[0m10:41:53.919133 [debug] [MainThread]: Flushing usage events
