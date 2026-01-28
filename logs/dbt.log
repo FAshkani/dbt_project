@@ -2778,3 +2778,53 @@ select * from source_data
 [0m13:04:44.343134 [info ] [MainThread]: Up to date!
 [0m13:04:44.345133 [debug] [MainThread]: Command `cli deps` succeeded at 13:04:44.344973 after 1.51 seconds
 [0m13:04:44.345460 [debug] [MainThread]: Flushing usage events
+[0m10:07:09.166023 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 10:07:09.221730 | 363ec900-9ffa-4f8e-a054-53655d4e4db5 ==============================
+[0m10:07:09.221730 [info ] [MainThread]: Running with dbt=1.10.15
+[0m10:07:09.222732 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\fashkani\\.dbt', 'use_colors': 'True', 'invocation_command': 'dbt ', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'c:\\Projects\\Fabric_Framework\\Baseline_Project\\dbt_project\\logs'}
+[0m10:07:09.545288 [error] [MainThread]: Encountered an error:
+[WinError 32] The process cannot access the file because it is being used by another process: 'dbt_packages\\dbt_utils\\integration_tests\\dbt_packages\\dbt_utils\\integration_tests\\dbt_packages\\dbt_utils'
+[0m10:07:09.548291 [error] [MainThread]: Traceback (most recent call last):
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 627, in _rmtree_unsafe
+    os.rmdir(fullname)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'dbt_packages\\dbt_utils\\integration_tests\\dbt_packages\\dbt_utils\\integration_tests\\dbt_packages\\dbt_utils'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 178, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 254, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 303, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\main.py", line 461, in deps
+    results = task.run()
+              ^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\task\deps.py", line 231, in run
+    system.rmtree(self.project.packages_install_path)
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt_common\clients\system.py", line 723, in rmtree
+    return shutil.rmtree(path, onerror=chmod_and_retry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 629, in _rmtree_unsafe
+    onexc(os.rmdir, fullname, err)
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 750, in onexc
+    return onerror(func, path, exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt_common\clients\system.py", line 669, in chmod_and_retry
+    func(path)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'dbt_packages\\dbt_utils\\integration_tests\\dbt_packages\\dbt_utils\\integration_tests\\dbt_packages\\dbt_utils'
+
+[0m10:07:09.549290 [debug] [MainThread]: Command `cli deps` failed at 10:07:09.549290 after 0.47 seconds
+[0m10:07:09.550289 [debug] [MainThread]: Flushing usage events
