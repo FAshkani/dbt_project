@@ -1,0 +1,10 @@
+[0m10:07:05.809184 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 10:07:05.852953 | 1640f4da-f492-4e45-a8f3-fa7d25be3569 ==============================
+[0m10:07:05.852953 [info ] [MainThread]: Running with dbt=1.10.15
+[0m10:07:05.854946 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\fashkani\\.dbt', 'indirect_selection': 'eager', 'invocation_command': 'dbt ', 'use_colors': 'True', 'use_experimental_parser': 'False', 'log_path': 'c:\\Projects\\Fabric_Framework\\Baseline_Project\\dbt_project\\dbt_packages\\dbt_utils\\logs'}
+[0m10:07:06.030197 [info ] [MainThread]: Warning: No packages were found in packages.yml
+[0m10:07:06.031205 [info ] [MainThread]: Warning: No packages were found in packages.yml
+[0m10:07:06.032196 [debug] [MainThread]: Command `cli deps` succeeded at 10:07:06.032196 after 0.28 seconds
+[0m10:07:06.033193 [debug] [MainThread]: Flushing usage events
