@@ -2779,6 +2779,7 @@ select * from source_data
 [0m13:04:44.345133 [debug] [MainThread]: Command `cli deps` succeeded at 13:04:44.344973 after 1.51 seconds
 [0m13:04:44.345460 [debug] [MainThread]: Flushing usage events
 <<<<<<< HEAD
+<<<<<<< HEAD
 [0m10:07:09.166023 [debug] [MainThread]: Got an exception trying to initialize tracking
 
 
@@ -2796,6 +2797,8 @@ During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
 =======
+=======
+>>>>>>> d960170c4e8bf1bb19f0dd09a86b14e4ba973124
 [0m19:56:40.058916 [debug] [MainThread]: Got an exception trying to initialize tracking
 
 
@@ -4456,6 +4459,9 @@ There are 1 unused configuration paths:
 [0m22:18:54.131454 [error] [MainThread]: Encountered an error:
 
 [0m22:18:54.190778 [error] [MainThread]: Traceback (most recent call last):
+<<<<<<< HEAD
+>>>>>>> d960170c4e8bf1bb19f0dd09a86b14e4ba973124
+=======
 >>>>>>> d960170c4e8bf1bb19f0dd09a86b14e4ba973124
   File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 178, in wrapper
     result, success = func(*args, **kwargs)
@@ -4464,7 +4470,11 @@ There are 1 unused configuration paths:
     return func(*args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^
 <<<<<<< HEAD
+<<<<<<< HEAD
   File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 254, in wrapper
+=======
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 272, in wrapper
+>>>>>>> d960170c4e8bf1bb19f0dd09a86b14e4ba973124
 =======
   File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 272, in wrapper
 >>>>>>> d960170c4e8bf1bb19f0dd09a86b14e4ba973124
@@ -4473,6 +4483,7 @@ There are 1 unused configuration paths:
   File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 303, in wrapper
     return func(*args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^
+<<<<<<< HEAD
 <<<<<<< HEAD
   File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\main.py", line 461, in deps
     results = task.run()
@@ -4497,6 +4508,8 @@ PermissionError: [WinError 32] The process cannot access the file because it is 
 [0m10:07:09.549290 [debug] [MainThread]: Command `cli deps` failed at 10:07:09.549290 after 0.47 seconds
 [0m10:07:09.550289 [debug] [MainThread]: Flushing usage events
 =======
+=======
+>>>>>>> d960170c4e8bf1bb19f0dd09a86b14e4ba973124
   File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 350, in wrapper
     return func(*args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^
@@ -4518,4 +4531,63 @@ KeyboardInterrupt
 
 [0m22:18:54.199756 [debug] [MainThread]: Command `dbt docs serve` failed at 22:18:54.199756 after 3211.84 seconds
 [0m22:18:54.201757 [debug] [MainThread]: Flushing usage events
+<<<<<<< HEAD
 >>>>>>> d960170c4e8bf1bb19f0dd09a86b14e4ba973124
+=======
+>>>>>>> d960170c4e8bf1bb19f0dd09a86b14e4ba973124
+[0m10:19:30.091656 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 10:19:30.145074 | cb771103-152f-43e5-af9b-bc065a34c0b8 ==============================
+[0m10:19:30.145074 [info ] [MainThread]: Running with dbt=1.10.15
+[0m10:19:30.146073 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\fashkani\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'use_colors': 'True', 'invocation_command': 'dbt ', 'use_experimental_parser': 'False', 'log_path': 'c:\\Projects\\Fabric_Framework\\Baseline_Project\\dbt_project\\logs'}
+[0m10:19:30.299274 [debug] [MainThread]: Set downloads directory='C:\Users\fashkani\AppData\Local\Temp\dbt-downloads-6kd5z7cv'
+[0m10:19:30.300278 [debug] [MainThread]: Making package index registry request: GET https://hub.getdbt.com/api/v1/index.json
+[0m10:19:30.642869 [debug] [MainThread]: Response from registry index: GET https://hub.getdbt.com/api/v1/index.json 200
+[0m10:19:30.644796 [debug] [MainThread]: Making package registry request: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json
+[0m10:19:30.903798 [debug] [MainThread]: Response from registry: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json 200
+[0m10:19:30.914718 [info ] [MainThread]: Updating lock file in file path: C:\Projects\Fabric_Framework\Baseline_Project\dbt_project/package-lock.yml
+[0m10:19:30.982958 [error] [MainThread]: Encountered an error:
+[WinError 32] The process cannot access the file because it is being used by another process: 'dbt_packages\\dbt_utils\\integration_tests'
+[0m10:19:30.985957 [error] [MainThread]: Traceback (most recent call last):
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 627, in _rmtree_unsafe
+    os.rmdir(fullname)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'dbt_packages\\dbt_utils\\integration_tests'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 178, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 254, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\requires.py", line 303, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\cli\main.py", line 461, in deps
+    results = task.run()
+              ^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt\task\deps.py", line 231, in run
+    system.rmtree(self.project.packages_install_path)
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt_common\clients\system.py", line 723, in rmtree
+    return shutil.rmtree(path, onerror=chmod_and_retry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 629, in _rmtree_unsafe
+    onexc(os.rmdir, fullname, err)
+  File "C:\Users\fashkani\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 750, in onexc
+    return onerror(func, path, exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\Fabric_Framework\fabric-env\Lib\site-packages\dbt_common\clients\system.py", line 669, in chmod_and_retry
+    func(path)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'dbt_packages\\dbt_utils\\integration_tests'
+
+[0m10:19:30.986956 [debug] [MainThread]: Command `cli deps` failed at 10:19:30.986956 after 0.94 seconds
+[0m10:19:30.987957 [debug] [MainThread]: Flushing usage events
