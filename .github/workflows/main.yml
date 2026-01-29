@@ -51,10 +51,10 @@ jobs:
           cat ~/.dbt/profiles.yml
 
       # Optional: install dbt packages only if packages.yml exists
-      - name: Install dbt packages (conditional)
-        if: ${{ hashFiles('packages.yml') != '' }}
-        run: dbt deps
-
+     # - name: Install dbt packages (conditional)
+      #  if: ${{ hashFiles('packages.yml') != '' }}
+       # run: dbt deps
+#
       - name: Compile & Generate dbt docs
         run: |
           # Use the profile we just created
