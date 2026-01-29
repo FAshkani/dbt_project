@@ -1,0 +1,182 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "IfCondition",
+        "typeProperties": {
+          "expression": {
+            "value": "@empty(pipeline().parameters.sdm_alm_workspace_id)",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "0aed3ee6-5f27-ae7d-426a-d053c7775763",
+                "workspaceId": "00000000-0000-0000-0000-000000000000"
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_define_parameters",
+              "dependsOn": []
+            },
+            {
+              "type": "SetVariable",
+              "typeProperties": {
+                "variableName": "var_sdm_alm_workspace_id",
+                "value": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).sdm_alm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "var_set_sdm_alm_workspace_id_true",
+              "dependsOn": [
+                {
+                  "activity": "nb_define_parameters",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            }
+          ],
+          "ifFalseActivities": [
+            {
+              "type": "SetVariable",
+              "typeProperties": {
+                "variableName": "var_sdm_alm_workspace_id",
+                "value": {
+                  "value": "@pipeline().parameters.sdm_alm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "var_set_sdm_alm_workspace_id_false",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "if_parameters_null",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "68624e8c-712c-8b81-4abe-8e3c05e9b473",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "workspace_id": {
+              "value": {
+                "value": "@variables('var_sdm_alm_workspace_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "nb_list_semantic_models",
+        "dependsOn": [
+          {
+            "activity": "if_parameters_null",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "batchCount": 5,
+          "items": {
+            "value": "@json(activity('nb_list_semantic_models').output.result.exitValue)",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "IfCondition",
+              "typeProperties": {
+                "expression": {
+                  "value": "@equals(item(), 0)",
+                  "type": "Expression"
+                },
+                "ifTrueActivities": [],
+                "ifFalseActivities": [
+                  {
+                    "type": "PBISemanticModelRefresh",
+                    "typeProperties": {
+                      "method": "post",
+                      "groupId": {
+                        "value": "@json(activity('nb_define_parameters').output.result.exitValue).sdm_alm_workspace_id",
+                        "type": "Expression"
+                      },
+                      "datasetId": {
+                        "value": "@item()",
+                        "type": "Expression"
+                      },
+                      "commitMode": "Transactional",
+                      "waitOnCompletion": true,
+                      "operationType": "SemanticModelRefresh"
+                    },
+                    "externalReferences": {
+                      "connection": "08f8580b-ca6f-47bd-bdff-938c4de1b51b"
+                    },
+                    "policy": {
+                      "timeout": "0.12:00:00",
+                      "retry": 0,
+                      "retryIntervalInSeconds": 30,
+                      "secureInput": false,
+                      "secureOutput": false
+                    },
+                    "name": "sm_shared_refresh",
+                    "dependsOn": []
+                  }
+                ]
+              },
+              "name": "if_semantic_models_exist",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "fe_semantic_models_list",
+        "dependsOn": [
+          {
+            "activity": "nb_list_semantic_models",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "sdm_alm_workspace_id": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "var_sdm_alm_workspace_id": {
+        "type": "String"
+      }
+    }
+  }
+}

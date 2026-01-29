@@ -1,0 +1,144 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "IfCondition",
+        "typeProperties": {
+          "expression": {
+            "value": "@or(empty(pipeline().parameters.cdm_master_notebook_id), empty(pipeline().parameters.cdm_workspace_id))",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "0aed3ee6-5f27-ae7d-426a-d053c7775763",
+                "workspaceId": "00000000-0000-0000-0000-000000000000"
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_define_parameters",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_master_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_workspace_id",
+                  "type": "Expression"
+                },
+                "parameters": {
+                  "dbt_command": {
+                    "value": {
+                      "value": "retry",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "dbt_select": {
+                    "type": "string"
+                  },
+                  "dbt_exclude": {
+                    "value": "",
+                    "type": "string"
+                  },
+                  "dbt_concurrency": {
+                    "value": "15",
+                    "type": "int"
+                  },
+                  "_inlineInstallationEnabled": {
+                    "value": "True",
+                    "type": "bool"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_master_transform_cdm_dbt_notebook",
+              "dependsOn": [
+                {
+                  "activity": "nb_define_parameters",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            }
+          ],
+          "ifFalseActivities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@pipeline().parameters.cdm_master_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@pipeline().parameters.cdm_workspace_id",
+                  "type": "Expression"
+                },
+                "parameters": {
+                  "dbt_command": {
+                    "value": {
+                      "value": "retry",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "dbt_select": {
+                    "type": "string"
+                  },
+                  "dbt_exclude": {
+                    "value": "",
+                    "type": "string"
+                  },
+                  "dbt_concurrency": {
+                    "value": "15",
+                    "type": "int"
+                  },
+                  "_inlineInstallationEnabled": {
+                    "value": "True",
+                    "type": "bool"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_master_transform_cdm_dbt_notebook_pm",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "if_parameters_null",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "cdm_workspace_id": {
+        "type": "string"
+      },
+      "cdm_master_notebook_id": {
+        "type": "string"
+      }
+    }
+  }
+}

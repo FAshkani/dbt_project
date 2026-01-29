@@ -1,0 +1,74 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "nb_run_ingestion_ddl_orchestrator",
+        "type": "TridentNotebook",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.inbound_lakehouses_orchestrator_ddl_notebook_id",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.inbound_workspace_id",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "pl_extract_load",
+        "type": "InvokePipeline",
+        "dependsOn": [
+          {
+            "activity": "nb_run_ingestion_ddl_orchestrator",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "waitOnCompletion": true,
+          "operationType": "InvokeFabricPipeline",
+          "pipelineId": {
+            "value": "@pipeline().parameters.ingestion_pipeline_id",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.inbound_workspace_id",
+            "type": "Expression"
+          },
+          "parameters": {}
+        },
+        "externalReferences": {
+          "connection": "2ba86342-88df-42c5-b01d-330e5269d2f6"
+        }
+      }
+    ],
+    "parameters": {
+      "inbound_workspace_id": {
+        "type": "string"
+      },
+      "inbound_lakehouses_orchestrator_ddl_notebook_id": {
+        "type": "string"
+      },
+      "ingestion_pipeline_id": {
+        "type": "string"
+      }
+    }
+  }
+}

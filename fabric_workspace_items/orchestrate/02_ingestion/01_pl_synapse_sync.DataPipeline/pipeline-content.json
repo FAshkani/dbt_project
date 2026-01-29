@@ -1,0 +1,292 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "IfCondition",
+        "typeProperties": {
+          "expression": {
+            "value": "@or(\n    empty(\n        pipeline().parameters.cdm_lakehouses_orchestrator_ddl_notebook_id)\n        , \n        or(\n            empty(\n                pipeline().parameters.cdm_workspace_id\n                ), \n            or(\n                empty(pipeline().parameters.synapse_parquet_load_notebook_id),\n                or(\n                    empty(pipeline().parameters.synapse_sync_notebook_id),\n                    empty(pipeline().parameters.synapse_sync_retry_helper_notebook_id)\n                )\n            )\n        )\n)",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "0aed3ee6-5f27-ae7d-426a-d053c7775763",
+                "workspaceId": "00000000-0000-0000-0000-000000000000"
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_define_parameters",
+              "description": "Get workspace and notebook GUID's",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).synapse_sync_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_synapse_sync",
+              "dependsOn": [
+                {
+                  "activity": "nb_run_cdm_ddl_orchestrator",
+                  "dependencyConditions": [
+                    "Completed"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_lakehouses_orchestrator_ddl_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_cdm_ddl_orchestrator",
+              "dependsOn": [
+                {
+                  "activity": "nb_define_parameters",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).synapse_parquet_load_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_synapse_parquet_load",
+              "dependsOn": [
+                {
+                  "activity": "nb_run_synapse_sync",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                },
+                {
+                  "activity": "nb_run_synapse_sync_retry",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).synapse_sync_retry_helper_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_synapse_sync_retry",
+              "dependsOn": [
+                {
+                  "activity": "nb_run_synapse_sync",
+                  "dependencyConditions": [
+                    "Failed"
+                  ]
+                }
+              ]
+            }
+          ],
+          "ifFalseActivities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@pipeline().parameters.synapse_sync_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@pipeline().parameters.cdm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_synapse_sync_pm",
+              "dependsOn": [
+                {
+                  "activity": "nb_run_cdm_ddl_orchestrator_pm",
+                  "dependencyConditions": [
+                    "Completed"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@pipeline().parameters.cdm_lakehouses_orchestrator_ddl_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@pipeline().parameters.cdm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_cdm_ddl_orchestrator_pm",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@pipeline().parameters.synapse_parquet_load_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@pipeline().parameters.cdm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_synapse_parquet_load_pm",
+              "dependsOn": [
+                {
+                  "activity": "nb_run_synapse_sync_pm",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                },
+                {
+                  "activity": "nb_run_synapse_sync_retry_pm",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@pipeline().parameters.synapse_sync_retry_helper_notebook_id",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@pipeline().parameters.cdm_workspace_id",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_synapse_sync_retry_pm",
+              "dependsOn": [
+                {
+                  "activity": "nb_run_synapse_sync_pm",
+                  "dependencyConditions": [
+                    "Failed"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "name": "if_parameters_null",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "cdm_workspace_id": {
+        "type": "string"
+      },
+      "cdm_lakehouses_orchestrator_ddl_notebook_id": {
+        "type": "string"
+      },
+      "synapse_sync_notebook_id": {
+        "type": "string"
+      },
+      "synapse_parquet_load_notebook_id": {
+        "type": "string"
+      },
+      "synapse_sync_retry_helper_notebook_id": {
+        "type": "string"
+      }
+    }
+  }
+}

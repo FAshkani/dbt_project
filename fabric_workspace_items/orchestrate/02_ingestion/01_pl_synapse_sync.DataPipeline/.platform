@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_synapse_sync"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c5a73c60-9bc6-a24b-4ab6-b61070a081bf"
+  }
+}

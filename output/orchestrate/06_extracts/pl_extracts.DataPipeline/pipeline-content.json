@@ -1,0 +1,54 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "nb_master_extract_dbt",
+        "type": "TridentNotebook",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.extract_master_notebook_id",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.outbound_workspace_id",
+            "type": "Expression"
+          },
+          "parameters": {
+            "dbt_select": {
+              "value": "",
+              "type": "string"
+            },
+            "dbt_exclude": {
+              "value": "",
+              "type": "string"
+            },
+            "dbt_command": {
+              "value": "build",
+              "type": "string"
+            },
+            "dbt_concurrency": {
+              "value": "15",
+              "type": "int"
+            }
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "outbound_workspace_id": {
+        "type": "string"
+      },
+      "extract_master_notebook_id": {
+        "type": "string"
+      }
+    }
+  }
+}

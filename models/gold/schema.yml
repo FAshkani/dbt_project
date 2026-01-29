@@ -163,14 +163,14 @@ models:
     data_type: timestamp
     description: ''
 - name: dim_territories
-  description: ''
+  description: 'gold layer table for territories'
   columns:
   - name: TerritoryID
     data_type: int
-    description: ''
+    description: 'Unique identifier for the territory'
   - name: Name
     data_type: string
-    description: ''
+    description: 'territory name'
   - name: CountryRegionCode
     data_type: string
     description: ''

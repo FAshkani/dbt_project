@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_master_orchestration",
+    "description": "Fabric data pipeline triggering extract & load, CDM, PDM and outbound extracts"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6c4183c8-36d6-bbba-44e4-8ac3001cf3ee"
+  }
+}

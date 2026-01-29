@@ -1,0 +1,77 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "fabric_environment",
+      "note": "",
+      "type": "String",
+      "value": "development"
+    },
+    {
+      "name": "fabric_deployment_workspace_id",
+      "note": "",
+      "type": "String",
+      "value": "8235cb07-5924-4a89-a052-45eae7446389"
+    },
+    {
+      "name": "cdm_workspace",
+      "note": "",
+      "type": "String",
+      "value": "EDAA_CDM_MAIN_DEV_001"
+    },
+    {
+      "name": "pdm_shared_workspace",
+      "note": "",
+      "type": "String",
+      "value": "EDAA_PDM_SHARED_MAIN_DEV_001"
+    },
+    {
+      "name": "pdm_alm_workspace",
+      "note": "",
+      "type": "String",
+      "value": "EDAA_PDM_ALM_MAIN_DEV_001"
+    },
+    {
+      "name": "pdm_food_workspace",
+      "note": "",
+      "type": "String",
+      "value": "EDAA_PDM_FOOD_MAIN_DEV_001"
+    },
+    {
+      "name": "outbound_workspace",
+      "note": "",
+      "type": "String",
+      "value": "EDAA_OUTBOUND_MAIN_DEV_001"
+    },
+    {
+      "name": "inbound_workspace",
+      "note": "",
+      "type": "String",
+      "value": "EDAA_INBOUND_MAIN_DEV_001"
+    },
+    {
+      "name": "config_lakehouse_name",
+      "note": "",
+      "type": "String",
+      "value": "config"
+    },
+    {
+      "name": "sdm_shared_workspace",
+      "note": "",
+      "type": "String",
+      "value": "EDAA_SDM_SHARED_MAIN_DEV_001"
+    },
+    {
+      "name": "sdm_alm_workspace",
+      "note": "",
+      "type": "String",
+      "value": "EDAA_SDM_ALM_MAIN_DEV_001"
+    },
+    {
+      "name": "sdm_food_workspace",
+      "note": "",
+      "type": "String",
+      "value": "EDAA_SDM_FOOD_MAIN_DEV_001"
+    }
+  ]
+}

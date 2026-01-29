@@ -1,0 +1,94 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/valueSet/1.0.0/schema.json",
+  "name": "development",
+  "variableOverrides": [
+    {
+      "name": "fabric_environment",
+      "value": "development"
+    },
+    {
+      "name": "fabric_deployment_workspace_id",
+      "value": "4f7db56c-7773-418d-b8aa-174f10118dff"
+    },
+    {
+      "name": "config_workspace_name",
+      "value": "ws_workflow"
+    },
+    {
+      "name": "config_workspace_id",
+      "value": "4f7db56c-7773-418d-b8aa-174f10118dff"
+    },
+    {
+      "name": "config_lakehouse_name",
+      "value": "config"
+    },
+    {
+      "name": "config_lakehouse_id",
+      "value": "d9573cac-cfde-40b6-8349-f361570bd02c"
+    },
+    {
+      "name": "lh_cdm_workspace_id",
+      "value": "4f7db56c-7773-418d-b8aa-174f10118dff"
+    },
+    {
+      "name": "lh_cdm_cmn_lakehouse_id",
+      "value": "80592e42-525a-4899-9490-5fd1eeb0a95d"
+    },
+    {
+      "name": "lh_cdm_dmplan_lakehouse_id",
+      "value": "07ac1aa7-6511-4fab-a158-7877d856f71a"
+    },
+    {
+      "name": "lh_cdm_invtry_lakehouse_id",
+      "value": "432315ad-4ca8-4eec-824a-53e4c1ae442f"
+    },
+    {
+      "name": "lh_cdm_margin_lakehouse_id",
+      "value": "460d1a6f-5238-4925-bf32-5602a6002d09"
+    },
+    {
+      "name": "lh_cdm_purch_lakehouse_id",
+      "value": "ca3ba8d7-6cae-4891-8b11-2f0169120f7f"
+    },
+    {
+      "name": "lh_cdm_loyprm_lakehouse_id",
+      "value": "74df7818-4113-40b8-bf48-2213261f8cac"
+    },
+    {
+      "name": "lh_cdm_logstc_lakehouse_id",
+      "value": "5c18b475-3bb5-4db3-ac23-15fa11ff12d8"
+    },
+    {
+      "name": "lh_cdm_exreg_lakehouse_id",
+      "value": "80494276-758e-4585-953a-499773e9d8dc"
+    },
+    {
+      "name": "lh_cdm_venana_lakehouse_id",
+      "value": "693aad9a-75fb-4c5f-be24-7cc48147f13e"
+    },
+    {
+      "name": "lh_cdm_promo_lakehouse_id",
+      "value": "47effc83-d05e-46ce-a36a-d5a3dbfe96b3"
+    },
+    {
+      "name": "lh_cdm_scan_lakehouse_id",
+      "value": "bc7773a3-a6e1-4c93-8141-6598cfadfcc1"
+    },
+    {
+      "name": "lh_cdm_cusana_lakehouse_id",
+      "value": "727525c7-cb9e-4be3-99df-cd3784f76365"
+    },
+    {
+      "name": "lh_cdm_rtscan_lakehouse_id",
+      "value": "0644a3b1-42c2-4c94-8aee-d918deac9e13"
+    },
+    {
+      "name": "wh_pdm_name",
+      "value": "wh_pdm_shared"
+    },
+    {
+      "name": "wh_pdm_sql_endpoint",
+      "value": "n73iwtqcrmsuxhc2rls3uf5zge-75oavgvdlrherl6uto6rwewaca.datawarehouse.fabric.microsoft.com"
+    }
+  ]
+}

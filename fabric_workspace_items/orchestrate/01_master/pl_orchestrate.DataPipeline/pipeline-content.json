@@ -1,0 +1,259 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "0aed3ee6-5f27-ae7d-426a-d053c7775763",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "nb_define_parameters",
+        "description": "Get workspace and notebook GUID's",
+        "dependsOn": []
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "cdm_workspace_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_workspace_id",
+              "type": "Expression"
+            },
+            "cdm_master_notebook_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_master_notebook_id",
+              "type": "Expression"
+            },
+            "dbt_select": ""
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "5b254731-ef59-8cb5-4f61-d7056afe93c8",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "2ba86342-88df-42c5-b01d-330e5269d2f6"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "pl_cdm",
+        "dependsOn": [
+          {
+            "activity": "pl_synapse_sync",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "cdm_workspace_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_workspace_id",
+              "type": "Expression"
+            },
+            "cdm_lakehouses_orchestrator_ddl_notebook_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).cdm_lakehouses_orchestrator_ddl_notebook_id",
+              "type": "Expression"
+            },
+            "synapse_sync_notebook_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).synapse_sync_notebook_id",
+              "type": "Expression"
+            },
+            "synapse_parquet_load_notebook_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).synapse_parquet_load_notebook_id",
+              "type": "Expression"
+            },
+            "synapse_sync_retry_helper_notebook_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).synapse_sync_retry_helper_notebook_id",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "c5a73c60-9bc6-a24b-4ab6-b61070a081bf",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "2ba86342-88df-42c5-b01d-330e5269d2f6"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "pl_synapse_sync",
+        "dependsOn": [
+          {
+            "activity": "nb_define_parameters",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "pdm_shared_workspace_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).pdm_shared_workspace_id",
+              "type": "Expression"
+            },
+            "pdm_shared_master_notebook_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).pdm_shared_master_notebook_id",
+              "type": "Expression"
+            },
+            "dbt_select": "transform_pdm_dbt",
+            "dbt_exclude": "."
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "5af384de-f15a-8b6c-4d9e-fc9472bc09ef",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "2ba86342-88df-42c5-b01d-330e5269d2f6"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "pl_pdm_shared",
+        "dependsOn": [
+          {
+            "activity": "pl_cdm",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "dbt_select": "tag:common tag:alm",
+            "pdm_alm_workspace_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).pdm_alm_workspace_id",
+              "type": "Expression"
+            },
+            "pdm_alm_master_notebook_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).pdm_alm_master_notebook_id",
+              "type": "Expression"
+            },
+            "dbt_exclude": "."
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "13494b25-b3d5-a8ba-4ac9-1945a641344b",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "2ba86342-88df-42c5-b01d-330e5269d2f6"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "pl_pdm_alm",
+        "dependsOn": [
+          {
+            "activity": "pl_cdm",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "dbt_select": "tag:common tag:food",
+            "pdm_food_workspace_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).pdm_food_workspace_id",
+              "type": "Expression"
+            },
+            "pdm_food_master_notebook_id": {
+              "value": "@json(activity('nb_define_parameters').output.result.exitValue).pdm_food_master_notebook_id",
+              "type": "Expression"
+            },
+            "dbt_exclude": "."
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "5e099bb6-8296-95a0-4c6b-a8085e6a686c",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "2ba86342-88df-42c5-b01d-330e5269d2f6"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "pl_pdm_food",
+        "dependsOn": [
+          {
+            "activity": "pl_cdm",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      }
+    ],
+    "libraryVariables": {
+      "cdm_workspace": {
+        "type": "String",
+        "variableName": "cdm_workspace",
+        "libraryName": "var_lib"
+      },
+      "pdm_shared_workspace": {
+        "type": "String",
+        "variableName": "pdm_shared_workspace",
+        "libraryName": "var_lib"
+      },
+      "pdm_alm_workspace": {
+        "type": "String",
+        "variableName": "pdm_alm_workspace",
+        "libraryName": "var_lib"
+      },
+      "pdm_food_workspace": {
+        "type": "String",
+        "variableName": "pdm_food_workspace",
+        "libraryName": "var_lib"
+      },
+      "ooutbound_workspace": {
+        "type": "String",
+        "variableName": "outbound_workspace",
+        "libraryName": "var_lib"
+      }
+    }
+  }
+}

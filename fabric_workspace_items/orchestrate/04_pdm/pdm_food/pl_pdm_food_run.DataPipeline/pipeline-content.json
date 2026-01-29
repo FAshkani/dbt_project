@@ -1,0 +1,154 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "IfCondition",
+        "typeProperties": {
+          "expression": {
+            "value": "@or(empty(pipeline().parameters.pdm_food_master_notebook_id), empty(pipeline().parameters.pdm_food_workspace_id))",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "0aed3ee6-5f27-ae7d-426a-d053c7775763",
+                "workspaceId": "00000000-0000-0000-0000-000000000000"
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_define_parameters",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@pipeline().parameters.pdm_food_master_notebook_id\n",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@json(activity('nb_define_parameters').output.result.exitValue).pdm_food_workspace_id",
+                  "type": "Expression"
+                },
+                "parameters": {
+                  "dbt_command": {
+                    "value": "build",
+                    "type": "string"
+                  },
+                  "dbt_select": {
+                    "value": {
+                      "value": "@pipeline().parameters.dbt_select",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "dbt_exclude": {
+                    "value": {
+                      "value": "@pipeline().parameters.dbt_exclude",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "dbt_concurrency": {
+                    "value": "15",
+                    "type": "int"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_transform_pdm_food_dbt",
+              "description": "Run Food pillar of PDM dbt project",
+              "dependsOn": [
+                {
+                  "activity": "nb_define_parameters",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            }
+          ],
+          "ifFalseActivities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": {
+                  "value": "@pipeline().parameters.pdm_food_master_notebook_id\n",
+                  "type": "Expression"
+                },
+                "workspaceId": {
+                  "value": "@pipeline().parameters.pdm_food_workspace_id",
+                  "type": "Expression"
+                },
+                "parameters": {
+                  "dbt_command": {
+                    "value": "build",
+                    "type": "string"
+                  },
+                  "dbt_select": {
+                    "value": {
+                      "value": "@pipeline().parameters.dbt_select",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "dbt_exclude": {
+                    "value": {
+                      "value": "@pipeline().parameters.dbt_exclude",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "dbt_concurrency": {
+                    "value": "15",
+                    "type": "int"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "nb_run_transform_pdm_food_dbt_pm",
+              "description": "Run Food pillar of PDM dbt project",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "if_parameters_null",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "pdm_food_workspace_id": {
+        "type": "string"
+      },
+      "pdm_food_master_notebook_id": {
+        "type": "string"
+      },
+      "dbt_select": {
+        "type": "string",
+        "defaultValue": "tag:common tag:food"
+      },
+      "dbt_exclude": {
+        "type": "string",
+        "defaultValue": "."
+      }
+    }
+  }
+}

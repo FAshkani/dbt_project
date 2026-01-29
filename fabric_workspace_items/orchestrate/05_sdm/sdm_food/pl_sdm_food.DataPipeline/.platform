@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_sdm_food"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "31cb10c1-5d5d-b9b3-48d4-39fdb07a9f38"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_pdm_shared_retry"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8c82e066-142f-bdb9-4e10-23f469b4f05d"
+  }
+}
