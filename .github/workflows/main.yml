@@ -66,7 +66,8 @@ jobs:
         run: |
           # Use the profile we just created
           dbt compile --profile ci_profile --target ci
-          dbt docs generate --static --profile ci_profile --target ci
+          #dbt docs generate --static --profile ci_profile --target ci
+          dbt docs generate  --profile ci_profile --target ci
    
           # Sanity: ensure index.html exists
       - name: Verify docs output
