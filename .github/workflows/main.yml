@@ -66,8 +66,8 @@ jobs:
         run: |
           # Use the profile we just created
           dbt compile --profile ci_profile --target ci
-          #dbt docs generate --static --profile ci_profile --target ci
-          dbt docs generate  --profile ci_profile --target ci
+          # dbt docs generate --static --profile ci_profile --target ci
+          dbt docs generate  --static --profile ci_profile --target ci
    
           # Sanity: ensure index.html exists
       - name: Verify docs output
@@ -85,7 +85,7 @@ jobs:
         run: |
           VERSION=$(date +%Y-%m-%d_%H-%M-%S)
           mkdir -p docs/$VERSION
-          cp -r target/* docs/$VERSION/
+          cp -R target/* docs/$VERSION/
 
       #  Create/enable Pages site automatically on first deploy
       - name: Configure Pages
