@@ -15,7 +15,7 @@ models:
   - name: update_date
     data_type: timestamp
     description: ''
-- name: dim_cities
+- name: dim_Cities
   description: 'This is the dimension table for cities.'
   columns:
   - name: CityID
