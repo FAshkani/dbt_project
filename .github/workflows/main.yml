@@ -1,5 +1,5 @@
 
-name: Build & Publish dbt Docs to GitHub Pages
+name: Build & Publish dbt Docs to GitHub Pages using workflows
 
 on:
   workflow_dispatch: {}
@@ -12,12 +12,18 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build: 
     runs-on: ubuntu-latest
-
     steps:
+
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # required so we can commit back
+
 
       - name: Setup Python 3.11
         uses: actions/setup-python@v5
@@ -50,18 +56,19 @@ jobs:
           echo "Wrote ~/.dbt/profiles.yml:"
           cat ~/.dbt/profiles.yml
 
-      # Optional: install dbt packages only if packages.yml exists
-     # - name: Install dbt packages (conditional)
-      #  if: ${{ hashFiles('packages.yml') != '' }}
-       # run: dbt deps
-#
+      # Optional: install dbt packages only if packages.yml exists!!
+      
+      - name: Install dbt packages (conditional)
+        if: ${{ hashFiles('packages.yml') != '' }}
+        run: dbt deps
+
       - name: Compile & Generate dbt docs
         run: |
           # Use the profile we just created
           dbt compile --profile ci_profile --target ci
-          dbt docs generate --profile ci_profile --target ci
-
-      # Sanity: ensure index.html exists
+          dbt docs generate --static --profile ci_profile --target ci
+   
+          # Sanity: ensure index.html exists
       - name: Verify docs output
         run: |
           test -f target/index.html || (echo "target/index.html is missing" && exit 1)
@@ -72,12 +79,26 @@ jobs:
         run: |
           mkdir -p site
           cp -R target/* site/
+  
+      - name: Prepare versioned folder
+        run: |
+          VERSION=$(date +%Y-%m-%d_%H-%M-%S)
+          mkdir -p docs/$VERSION
+          cp -r target/* docs/$VERSION/
 
       #  Create/enable Pages site automatically on first deploy
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
+          # push docs to repo
+      - name: Commit docs back to repo
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add docs/
+          git commit -m "Add dbt docs for $VERSION" || echo "No changes to commit"
+          git push
 
 
      # Step 1: Configure Pages (sets up the environment)
@@ -91,7 +112,8 @@ jobs:
           path: site
           overwrite: true
  
-# Step 3: Deploy to Pages
+
+# Step 3: Deploy dbt docs site to github Pages
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -102,3 +124,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+
