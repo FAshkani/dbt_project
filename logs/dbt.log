@@ -2003,3 +2003,988 @@ KeyboardInterrupt
 
 [0m10:53:31.208471 [debug] [MainThread]: Command `dbt docs serve` failed at 10:53:31.208471 after 62.59 seconds
 [0m10:53:31.209478 [debug] [MainThread]: Flushing usage events
+[0m10:35:40.309960 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 10:35:40.352960 | e65d7420-5ba3-41b3-86c8-db046bd32b18 ==============================
+[0m10:35:40.352960 [info ] [MainThread]: Running with dbt=1.10.15
+[0m10:35:40.353902 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'False', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\fashkani\\.dbt', 'indirect_selection': 'eager', 'invocation_command': 'dbt compile', 'use_colors': 'True', 'use_experimental_parser': 'False', 'log_path': 'C:\\Projects\\Fabric_Framework\\Baseline_Project\\dbt_project\\logs'}
+[0m10:35:40.511909 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting fabricspark.connector to DEBUG
+[0m10:35:40.511909 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting botocore to DEBUG
+[0m10:35:40.512910 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting boto3 to DEBUG
+[0m10:35:40.512910 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting Microsoft Fabric-Spark.connector to DEBUG
+[0m10:35:40.520910 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting fabricsparknb.connector to DEBUG
+[0m10:35:40.520910 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting botocore to DEBUG
+[0m10:35:40.521910 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting boto3 to DEBUG
+[0m10:35:40.521910 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting Microsoft Fabric-Spark.connector to DEBUG
+[0m10:35:40.704210 [info ] [MainThread]: Registered adapter: fabricsparknb=1.7.0
+[0m10:35:41.015040 [debug] [MainThread]: checksum: 14a228079bd6df63ba81633f9a3cf44ecfaa31056ac397c602753ec895dbf885, vars: {}, profile: , target: , version: 1.10.15
+[0m10:35:41.169124 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m10:35:41.169124 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m10:35:41.174446 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.dbt_project.bronze
+[0m10:35:41.262450 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\manifest.json
+[0m10:35:41.264456 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\semantic_manifest.json
+[0m10:35:41.281727 [info ] [MainThread]: Found 12 models, 6 sources, 612 macros
+[0m10:35:41.283729 [info ] [MainThread]: 
+[0m10:35:41.284585 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m10:35:41.284585 [info ] [MainThread]: 
+[0m10:35:41.284585 [debug] [MainThread]: Acquiring new fabricsparknb connection 'master'
+[0m10:35:41.290290 [debug] [ThreadPool]: Acquiring new fabricsparknb connection 'list_None_lh_silver'
+[0m10:35:41.320415 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_None_lh_silver, now list_None_lh_gold)
+[0m10:35:41.346311 [debug] [Thread-1 (]: Began running node model.dbt_project.cities
+[0m10:35:41.347332 [debug] [Thread-1 (]: Acquiring new fabricsparknb connection 'model.dbt_project.cities'
+[0m10:35:41.347332 [debug] [Thread-1 (]: Began compiling node model.dbt_project.cities
+[0m10:35:41.355319 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.cities"
+[0m10:35:41.356326 [debug] [Thread-1 (]: Began executing node model.dbt_project.cities
+[0m10:35:41.357340 [debug] [Thread-1 (]: Finished running node model.dbt_project.cities
+[0m10:35:41.357340 [debug] [Thread-1 (]: Began running node model.dbt_project.countries
+[0m10:35:41.358323 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.cities, now model.dbt_project.countries)
+[0m10:35:41.358323 [debug] [Thread-1 (]: Began compiling node model.dbt_project.countries
+[0m10:35:41.361330 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.countries"
+[0m10:35:41.362326 [debug] [Thread-1 (]: Began executing node model.dbt_project.countries
+[0m10:35:41.363327 [debug] [Thread-1 (]: Finished running node model.dbt_project.countries
+[0m10:35:41.363327 [debug] [Thread-1 (]: Began running node model.dbt_project.departments
+[0m10:35:41.363920 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.countries, now model.dbt_project.departments)
+[0m10:35:41.363920 [debug] [Thread-1 (]: Began compiling node model.dbt_project.departments
+[0m10:35:41.366432 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.departments"
+[0m10:35:41.366432 [debug] [Thread-1 (]: Began executing node model.dbt_project.departments
+[0m10:35:41.367432 [debug] [Thread-1 (]: Finished running node model.dbt_project.departments
+[0m10:35:41.367432 [debug] [Thread-1 (]: Began running node model.dbt_project.orders
+[0m10:35:41.367432 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.departments, now model.dbt_project.orders)
+[0m10:35:41.368432 [debug] [Thread-1 (]: Began compiling node model.dbt_project.orders
+[0m10:35:41.370433 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.orders"
+[0m10:35:41.371432 [debug] [Thread-1 (]: Began executing node model.dbt_project.orders
+[0m10:35:41.371432 [debug] [Thread-1 (]: Finished running node model.dbt_project.orders
+[0m10:35:41.372432 [debug] [Thread-1 (]: Began running node model.dbt_project.products
+[0m10:35:41.372432 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.orders, now model.dbt_project.products)
+[0m10:35:41.372432 [debug] [Thread-1 (]: Began compiling node model.dbt_project.products
+[0m10:35:41.375432 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.products"
+[0m10:35:41.375432 [debug] [Thread-1 (]: Began executing node model.dbt_project.products
+[0m10:35:41.376433 [debug] [Thread-1 (]: Finished running node model.dbt_project.products
+[0m10:35:41.376433 [debug] [Thread-1 (]: Began running node model.dbt_project.territories
+[0m10:35:41.377432 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.products, now model.dbt_project.territories)
+[0m10:35:41.377432 [debug] [Thread-1 (]: Began compiling node model.dbt_project.territories
+[0m10:35:41.379432 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.territories"
+[0m10:35:41.380431 [debug] [Thread-1 (]: Began executing node model.dbt_project.territories
+[0m10:35:41.380431 [debug] [Thread-1 (]: Finished running node model.dbt_project.territories
+[0m10:35:41.380431 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_cities
+[0m10:35:41.381431 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.territories, now model.dbt_project.dim_cities)
+[0m10:35:41.381431 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_cities
+[0m10:35:41.383432 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_cities"
+[0m10:35:41.384432 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_cities
+[0m10:35:41.384432 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_cities
+[0m10:35:41.385432 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_departments
+[0m10:35:41.385432 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_cities, now model.dbt_project.dim_departments)
+[0m10:35:41.385432 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_departments
+[0m10:35:41.388432 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_departments"
+[0m10:35:41.388432 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_departments
+[0m10:35:41.389432 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_departments
+[0m10:35:41.389432 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_products
+[0m10:35:41.389432 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_departments, now model.dbt_project.dim_products)
+[0m10:35:41.390432 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_products
+[0m10:35:41.392432 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_products"
+[0m10:35:41.392432 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_products
+[0m10:35:41.393432 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_products
+[0m10:35:41.393432 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_territories
+[0m10:35:41.393432 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_products, now model.dbt_project.dim_territories)
+[0m10:35:41.394431 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_territories
+[0m10:35:41.397432 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_territories"
+[0m10:35:41.397432 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_territories
+[0m10:35:41.398432 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_territories
+[0m10:35:41.398432 [debug] [Thread-1 (]: Began running node model.dbt_project.order_territory
+[0m10:35:41.398432 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_territories, now model.dbt_project.order_territory)
+[0m10:35:41.398432 [debug] [Thread-1 (]: Began compiling node model.dbt_project.order_territory
+[0m10:35:41.401432 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.order_territory"
+[0m10:35:41.401432 [debug] [Thread-1 (]: Began executing node model.dbt_project.order_territory
+[0m10:35:41.402432 [debug] [Thread-1 (]: Finished running node model.dbt_project.order_territory
+[0m10:35:41.402432 [debug] [Thread-1 (]: Began running node model.dbt_project.order_territory1
+[0m10:35:41.402432 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.order_territory, now model.dbt_project.order_territory1)
+[0m10:35:41.402432 [debug] [Thread-1 (]: Began compiling node model.dbt_project.order_territory1
+[0m10:35:41.415432 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.order_territory1"
+[0m10:35:41.415432 [debug] [Thread-1 (]: Began executing node model.dbt_project.order_territory1
+[0m10:35:41.416432 [debug] [Thread-1 (]: Finished running node model.dbt_project.order_territory1
+[0m10:35:41.418361 [debug] [MainThread]: Command end result
+[0m10:35:41.443300 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\manifest.json
+[0m10:35:41.445305 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\semantic_manifest.json
+[0m10:35:41.450299 [debug] [MainThread]: Wrote artifact RunExecutionResult to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\run_results.json
+[0m10:35:41.451306 [debug] [MainThread]: Command `dbt compile` succeeded at 10:35:41.451306 after 1.19 seconds
+[0m10:35:41.451306 [debug] [MainThread]: Flushing usage events
+[0m10:35:46.483083 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 10:35:46.526362 | 11e51692-408f-4c0a-bfc7-d00726778b9f ==============================
+[0m10:35:46.526362 [info ] [MainThread]: Running with dbt=1.10.15
+[0m10:35:46.526362 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\fashkani\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'use_colors': 'True', 'invocation_command': 'dbt run', 'use_experimental_parser': 'False', 'log_path': 'C:\\Projects\\Fabric_Framework\\Baseline_Project\\dbt_project\\logs'}
+[0m10:35:46.680882 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting fabricspark.connector to DEBUG
+[0m10:35:46.681891 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting botocore to DEBUG
+[0m10:35:46.681891 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting boto3 to DEBUG
+[0m10:35:46.681891 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting Microsoft Fabric-Spark.connector to DEBUG
+[0m10:35:46.690412 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting fabricsparknb.connector to DEBUG
+[0m10:35:46.690412 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting botocore to DEBUG
+[0m10:35:46.690412 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting boto3 to DEBUG
+[0m10:35:46.691421 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting Microsoft Fabric-Spark.connector to DEBUG
+[0m10:35:46.873964 [info ] [MainThread]: Registered adapter: fabricsparknb=1.7.0
+[0m10:35:47.180699 [debug] [MainThread]: checksum: 14a228079bd6df63ba81633f9a3cf44ecfaa31056ac397c602753ec895dbf885, vars: {}, profile: , target: , version: 1.10.15
+[0m10:35:47.332222 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m10:35:47.332222 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m10:35:47.338217 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.dbt_project.bronze
+[0m10:35:47.427290 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\manifest.json
+[0m10:35:47.429297 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\semantic_manifest.json
+[0m10:35:47.449112 [info ] [MainThread]: Found 12 models, 6 sources, 612 macros
+[0m10:35:47.451172 [info ] [MainThread]: 
+[0m10:35:47.451172 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m10:35:47.452034 [info ] [MainThread]: 
+[0m10:35:47.452034 [debug] [MainThread]: Acquiring new fabricsparknb connection 'master'
+[0m10:35:47.457369 [debug] [ThreadPool]: Acquiring new fabricsparknb connection 'list_schemas'
+[0m10:35:47.482154 [debug] [ThreadPool]: Acquiring new fabricsparknb connection 'list_None_lh_silver'
+[0m10:35:47.491769 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_None_lh_silver, now list_None_lh_gold)
+[0m10:35:47.513272 [debug] [MainThread]: Microsoft Fabric-Spark adapter: NotImplemented: add_begin_query
+[0m10:35:47.513272 [debug] [MainThread]: Microsoft Fabric-Spark adapter: NotImplemented: commit
+[0m10:35:47.517548 [debug] [Thread-1 (]: Began running node model.dbt_project.cities
+[0m10:35:47.517548 [info ] [Thread-1 (]: 1 of 12 START sql incremental model lh_silver.cities ........................... [RUN]
+[0m10:35:47.518546 [debug] [Thread-1 (]: Acquiring new fabricsparknb connection 'model.dbt_project.cities'
+[0m10:35:47.518546 [debug] [Thread-1 (]: Began compiling node model.dbt_project.cities
+[0m10:35:47.527553 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.cities"
+[0m10:35:47.528559 [debug] [Thread-1 (]: Began executing node model.dbt_project.cities
+[0m10:35:47.573553 [debug] [Thread-1 (]: Microsoft Fabric-Spark adapter: NotImplemented: add_begin_query
+[0m10:35:47.573553 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.cities"
+[0m10:35:47.574559 [debug] [Thread-1 (]: On model.dbt_project.cities: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.cities"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view cities__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_bronze.cities t1
+)
+
+select * from source_data
+  
+[0m10:35:47.574559 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m10:35:47.674891 [debug] [Thread-1 (]: SQL status: OK in 0.100 seconds
+[0m10:35:47.724050 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.cities"
+[0m10:35:47.725049 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.cities"
+[0m10:35:47.725049 [debug] [Thread-1 (]: On model.dbt_project.cities: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.cities"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_silver.cities as DBT_INTERNAL_DEST
+      using cities__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.CityID = DBT_INTERNAL_DEST.CityID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:47.750522 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:47.825312 [debug] [Thread-1 (]: Spark adapter: Setting pyhive.hive logging to ERROR
+[0m10:35:47.825312 [debug] [Thread-1 (]: Spark adapter: Setting thrift.transport logging to ERROR
+[0m10:35:47.825312 [debug] [Thread-1 (]: Spark adapter: Setting thrift.protocol logging to ERROR
+[0m10:35:47.829307 [info ] [Thread-1 (]: 1 of 12 OK created sql incremental model lh_silver.cities ...................... [[32mOK[0m in 0.24s]
+[0m10:35:47.830308 [debug] [Thread-1 (]: Finished running node model.dbt_project.cities
+[0m10:35:47.830308 [debug] [Thread-1 (]: Began running node model.dbt_project.countries
+[0m10:35:47.830308 [info ] [Thread-1 (]: 2 of 12 START sql incremental model lh_silver.countries ........................ [RUN]
+[0m10:35:47.831316 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.cities, now model.dbt_project.countries)
+[0m10:35:47.831316 [debug] [Thread-1 (]: Began compiling node model.dbt_project.countries
+[0m10:35:47.834314 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.countries"
+[0m10:35:47.835306 [debug] [Thread-1 (]: Began executing node model.dbt_project.countries
+[0m10:35:47.844314 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.countries"
+[0m10:35:47.844314 [debug] [Thread-1 (]: On model.dbt_project.countries: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.countries"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view countries__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_bronze.countries t1
+)
+
+select * from source_data
+  
+[0m10:35:47.847308 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:47.861312 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.countries"
+[0m10:35:47.862315 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.countries"
+[0m10:35:47.863319 [debug] [Thread-1 (]: On model.dbt_project.countries: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.countries"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_silver.countries as DBT_INTERNAL_DEST
+      using countries__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.CountryID = DBT_INTERNAL_DEST.CountryID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:47.884206 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:47.886206 [info ] [Thread-1 (]: 2 of 12 OK created sql incremental model lh_silver.countries ................... [[32mOK[0m in 0.05s]
+[0m10:35:47.887206 [debug] [Thread-1 (]: Finished running node model.dbt_project.countries
+[0m10:35:47.888207 [debug] [Thread-1 (]: Began running node model.dbt_project.departments
+[0m10:35:47.888207 [info ] [Thread-1 (]: 3 of 12 START sql incremental model lh_silver.departments ...................... [RUN]
+[0m10:35:47.889208 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.countries, now model.dbt_project.departments)
+[0m10:35:47.889208 [debug] [Thread-1 (]: Began compiling node model.dbt_project.departments
+[0m10:35:47.893485 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.departments"
+[0m10:35:47.894485 [debug] [Thread-1 (]: Began executing node model.dbt_project.departments
+[0m10:35:47.903486 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.departments"
+[0m10:35:47.903486 [debug] [Thread-1 (]: On model.dbt_project.departments: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.departments"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view departments__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_bronze.departments t1
+)
+
+select * from source_data
+  
+[0m10:35:47.906486 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:47.917492 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.departments"
+[0m10:35:47.919485 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.departments"
+[0m10:35:47.919485 [debug] [Thread-1 (]: On model.dbt_project.departments: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.departments"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_silver.departments as DBT_INTERNAL_DEST
+      using departments__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.DepartmentID = DBT_INTERNAL_DEST.DepartmentID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:47.944486 [debug] [Thread-1 (]: SQL status: OK in 0.030 seconds
+[0m10:35:47.946487 [info ] [Thread-1 (]: 3 of 12 OK created sql incremental model lh_silver.departments ................. [[32mOK[0m in 0.06s]
+[0m10:35:47.947068 [debug] [Thread-1 (]: Finished running node model.dbt_project.departments
+[0m10:35:47.947068 [debug] [Thread-1 (]: Began running node model.dbt_project.orders
+[0m10:35:47.948159 [info ] [Thread-1 (]: 4 of 12 START sql incremental model lh_silver.orders ........................... [RUN]
+[0m10:35:47.948159 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.departments, now model.dbt_project.orders)
+[0m10:35:47.949156 [debug] [Thread-1 (]: Began compiling node model.dbt_project.orders
+[0m10:35:47.951136 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.orders"
+[0m10:35:47.952137 [debug] [Thread-1 (]: Began executing node model.dbt_project.orders
+[0m10:35:47.961137 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.orders"
+[0m10:35:47.962162 [debug] [Thread-1 (]: On model.dbt_project.orders: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.orders"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view orders__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_bronze.orders t1
+)
+
+select * from source_data
+  
+[0m10:35:47.964150 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:47.975143 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.orders"
+[0m10:35:47.976157 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.orders"
+[0m10:35:47.977239 [debug] [Thread-1 (]: On model.dbt_project.orders: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.orders"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_silver.orders as DBT_INTERNAL_DEST
+      using orders__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.SalesOrderID = DBT_INTERNAL_DEST.SalesOrderID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:47.997857 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:48.000855 [info ] [Thread-1 (]: 4 of 12 OK created sql incremental model lh_silver.orders ...................... [[32mOK[0m in 0.05s]
+[0m10:35:48.001422 [debug] [Thread-1 (]: Finished running node model.dbt_project.orders
+[0m10:35:48.001422 [debug] [Thread-1 (]: Began running node model.dbt_project.products
+[0m10:35:48.002496 [info ] [Thread-1 (]: 5 of 12 START sql incremental model lh_silver.products ......................... [RUN]
+[0m10:35:48.002496 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.orders, now model.dbt_project.products)
+[0m10:35:48.003500 [debug] [Thread-1 (]: Began compiling node model.dbt_project.products
+[0m10:35:48.006435 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.products"
+[0m10:35:48.008438 [debug] [Thread-1 (]: Began executing node model.dbt_project.products
+[0m10:35:48.017438 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.products"
+[0m10:35:48.017438 [debug] [Thread-1 (]: On model.dbt_project.products: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.products"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view products__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_bronze.products t1
+)
+
+select * from source_data
+  
+[0m10:35:48.020448 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:48.033440 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.products"
+[0m10:35:48.034452 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.products"
+[0m10:35:48.034452 [debug] [Thread-1 (]: On model.dbt_project.products: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.products"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_silver.products as DBT_INTERNAL_DEST
+      using products__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.ProductID = DBT_INTERNAL_DEST.ProductID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:48.054432 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:48.057432 [info ] [Thread-1 (]: 5 of 12 OK created sql incremental model lh_silver.products .................... [[32mOK[0m in 0.05s]
+[0m10:35:48.058431 [debug] [Thread-1 (]: Finished running node model.dbt_project.products
+[0m10:35:48.058431 [debug] [Thread-1 (]: Began running node model.dbt_project.territories
+[0m10:35:48.059438 [info ] [Thread-1 (]: 6 of 12 START sql incremental model lh_silver.territories ...................... [RUN]
+[0m10:35:48.060321 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.products, now model.dbt_project.territories)
+[0m10:35:48.061402 [debug] [Thread-1 (]: Began compiling node model.dbt_project.territories
+[0m10:35:48.063398 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.territories"
+[0m10:35:48.064403 [debug] [Thread-1 (]: Began executing node model.dbt_project.territories
+[0m10:35:48.073333 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.territories"
+[0m10:35:48.073333 [debug] [Thread-1 (]: On model.dbt_project.territories: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.territories"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view territories__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_bronze.territories t1
+)
+
+select * from source_data
+  
+[0m10:35:48.076326 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:48.088330 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.territories"
+[0m10:35:48.090346 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.territories"
+[0m10:35:48.091353 [debug] [Thread-1 (]: On model.dbt_project.territories: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.territories"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_silver.territories as DBT_INTERNAL_DEST
+      using territories__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.TerritoryID = DBT_INTERNAL_DEST.TerritoryID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:48.106964 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:48.109971 [info ] [Thread-1 (]: 6 of 12 OK created sql incremental model lh_silver.territories ................. [[32mOK[0m in 0.05s]
+[0m10:35:48.110964 [debug] [Thread-1 (]: Finished running node model.dbt_project.territories
+[0m10:35:48.111967 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_cities
+[0m10:35:48.111967 [info ] [Thread-1 (]: 7 of 12 START sql incremental model lh_gold.dim_cities ......................... [RUN]
+[0m10:35:48.112659 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.territories, now model.dbt_project.dim_cities)
+[0m10:35:48.112659 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_cities
+[0m10:35:48.116727 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_cities"
+[0m10:35:48.117735 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_cities
+[0m10:35:48.128673 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.dim_cities"
+[0m10:35:48.128673 [debug] [Thread-1 (]: On model.dbt_project.dim_cities: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.dim_cities"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view dim_cities__dbt_tmp as
+      
+
+
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_silver.cities t1
+)
+
+select * from source_data
+  
+[0m10:35:48.131673 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:48.142673 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.dim_cities"
+[0m10:35:48.144666 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.dim_cities"
+[0m10:35:48.144666 [debug] [Thread-1 (]: On model.dbt_project.dim_cities: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.dim_cities"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_gold.dim_cities as DBT_INTERNAL_DEST
+      using dim_cities__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.CityID = DBT_INTERNAL_DEST.CityID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:48.164259 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:48.166243 [info ] [Thread-1 (]: 7 of 12 OK created sql incremental model lh_gold.dim_cities .................... [[32mOK[0m in 0.05s]
+[0m10:35:48.167435 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_cities
+[0m10:35:48.167435 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_departments
+[0m10:35:48.168505 [info ] [Thread-1 (]: 8 of 12 START sql incremental model lh_gold.dim_departments .................... [RUN]
+[0m10:35:48.169550 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_cities, now model.dbt_project.dim_departments)
+[0m10:35:48.169550 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_departments
+[0m10:35:48.172446 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_departments"
+[0m10:35:48.174532 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_departments
+[0m10:35:48.183576 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.dim_departments"
+[0m10:35:48.183576 [debug] [Thread-1 (]: On model.dbt_project.dim_departments: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.dim_departments"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view dim_departments__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_silver.departments t1
+)
+
+select * from source_data
+  
+[0m10:35:48.186512 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:48.199055 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.dim_departments"
+[0m10:35:48.200051 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.dim_departments"
+[0m10:35:48.201050 [debug] [Thread-1 (]: On model.dbt_project.dim_departments: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.dim_departments"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_gold.dim_departments as DBT_INTERNAL_DEST
+      using dim_departments__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.DepartmentID = DBT_INTERNAL_DEST.DepartmentID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:48.217050 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:48.219050 [info ] [Thread-1 (]: 8 of 12 OK created sql incremental model lh_gold.dim_departments ............... [[32mOK[0m in 0.05s]
+[0m10:35:48.220045 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_departments
+[0m10:35:48.220045 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_products
+[0m10:35:48.220045 [info ] [Thread-1 (]: 9 of 12 START sql incremental model lh_gold.dim_products ....................... [RUN]
+[0m10:35:48.221059 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_departments, now model.dbt_project.dim_products)
+[0m10:35:48.222055 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_products
+[0m10:35:48.225050 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_products"
+[0m10:35:48.226050 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_products
+[0m10:35:48.235063 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.dim_products"
+[0m10:35:48.235063 [debug] [Thread-1 (]: On model.dbt_project.dim_products: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.dim_products"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view dim_products__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_silver.products t1
+)
+
+select * from source_data
+  
+[0m10:35:48.238045 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:48.251049 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.dim_products"
+[0m10:35:48.252056 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.dim_products"
+[0m10:35:48.253050 [debug] [Thread-1 (]: On model.dbt_project.dim_products: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.dim_products"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_gold.dim_products as DBT_INTERNAL_DEST
+      using dim_products__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.ProductID = DBT_INTERNAL_DEST.ProductID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:48.270591 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:48.272607 [info ] [Thread-1 (]: 9 of 12 OK created sql incremental model lh_gold.dim_products .................. [[32mOK[0m in 0.05s]
+[0m10:35:48.273600 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_products
+[0m10:35:48.273600 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_territories
+[0m10:35:48.274600 [info ] [Thread-1 (]: 10 of 12 START sql incremental model lh_gold.dim_territories ................... [RUN]
+[0m10:35:48.275195 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_products, now model.dbt_project.dim_territories)
+[0m10:35:48.276279 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_territories
+[0m10:35:48.278356 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_territories"
+[0m10:35:48.279361 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_territories
+[0m10:35:48.289287 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.dim_territories"
+[0m10:35:48.289287 [debug] [Thread-1 (]: On model.dbt_project.dim_territories: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.dim_territories"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view dim_territories__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+    select * FROM lh_silver.territories t1
+)
+
+select * from source_data
+  
+[0m10:35:48.291797 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:48.303803 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.dim_territories"
+[0m10:35:48.305808 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.dim_territories"
+[0m10:35:48.306819 [debug] [Thread-1 (]: On model.dbt_project.dim_territories: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.dim_territories"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_gold.dim_territories as DBT_INTERNAL_DEST
+      using dim_territories__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.TerritoryID = DBT_INTERNAL_DEST.TerritoryID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:48.327642 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:48.329625 [info ] [Thread-1 (]: 10 of 12 OK created sql incremental model lh_gold.dim_territories .............. [[32mOK[0m in 0.05s]
+[0m10:35:48.330237 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_territories
+[0m10:35:48.330237 [debug] [Thread-1 (]: Began running node model.dbt_project.order_territory
+[0m10:35:48.331267 [info ] [Thread-1 (]: 11 of 12 START sql incremental model lh_gold.order_territory ................... [RUN]
+[0m10:35:48.331942 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_territories, now model.dbt_project.order_territory)
+[0m10:35:48.331942 [debug] [Thread-1 (]: Began compiling node model.dbt_project.order_territory
+[0m10:35:48.336014 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.order_territory"
+[0m10:35:48.337947 [debug] [Thread-1 (]: Began executing node model.dbt_project.order_territory
+[0m10:35:48.347953 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.order_territory"
+[0m10:35:48.348953 [debug] [Thread-1 (]: On model.dbt_project.order_territory: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.order_territory"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    create or replace temporary view order_territory__dbt_tmp as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+
+SELECT 		
+			ord.SalesOrderID as SalesOrderID,
+			ord.TerritoryID,
+			tr.Name as TerritoryName,
+			tr.Group as TerritoryGroup,
+			ord.TaxAmt,
+			ord.Freight,
+			ord.TotalDue,
+			ord.Comment,
+			ord.ModifiedDate
+FROM lh_silver.orders  ord
+LEFT JOIN lh_silver.territories  tr
+ON ord.TerritoryID = tr.TerritoryID
+
+)
+
+select * from source_data
+  
+[0m10:35:48.350945 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:48.363955 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.order_territory"
+[0m10:35:48.366947 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.order_territory"
+[0m10:35:48.366947 [debug] [Thread-1 (]: On model.dbt_project.order_territory: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.order_territory"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+    -- back compat for old kwarg name
+  
+  
+  
+      
+          
+          
+      
+  
+
+  
+
+  merge into lh_gold.order_territory as DBT_INTERNAL_DEST
+      using order_territory__dbt_tmp as DBT_INTERNAL_SOURCE
+      on 
+              DBT_INTERNAL_SOURCE.SalesOrderID = DBT_INTERNAL_DEST.SalesOrderID
+          
+
+      when matched then update set
+         * 
+
+      when not matched then insert *
+
+[0m10:35:48.383952 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m10:35:48.384952 [info ] [Thread-1 (]: 11 of 12 OK created sql incremental model lh_gold.order_territory .............. [[32mOK[0m in 0.05s]
+[0m10:35:48.386069 [debug] [Thread-1 (]: Finished running node model.dbt_project.order_territory
+[0m10:35:48.386069 [debug] [Thread-1 (]: Began running node model.dbt_project.order_territory1
+[0m10:35:48.387076 [info ] [Thread-1 (]: 12 of 12 START sql incremental model lh_gold.order_territory1 .................. [RUN]
+[0m10:35:48.388075 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.order_territory, now model.dbt_project.order_territory1)
+[0m10:35:48.388075 [debug] [Thread-1 (]: Began compiling node model.dbt_project.order_territory1
+[0m10:35:48.401787 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.order_territory1"
+[0m10:35:48.402781 [debug] [Thread-1 (]: Began executing node model.dbt_project.order_territory1
+[0m10:35:48.432782 [debug] [Thread-1 (]: Writing runtime sql for node "model.dbt_project.order_territory1"
+[0m10:35:48.434805 [debug] [Thread-1 (]: Using fabricsparknb connection "model.dbt_project.order_territory1"
+[0m10:35:48.434805 [debug] [Thread-1 (]: On model.dbt_project.order_territory1: /* {"app": "dbt", "dbt_version": "1.10.15", "profile_name": "if_demo", "target_name": "dev", "node_id": "model.dbt_project.order_territory1"} */
+/*{"project_root": "C:/Projects/Fabric_Framework/Baseline_Project/dbt_project"}*/
+
+  
+    
+        create or replace table lh_gold.order_territory1
+      
+      
+      
+      
+      
+      
+      
+      
+
+      as
+      
+
+-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
+WITH source_data AS (
+
+SELECT 	CASE WHEN ord.SalesOrderID < 50000 THEN	
+ 
+      MD5(
+        CONCAT_WS(
+          '||',COALESCE(CAST(ord.TerritoryID AS string), '__NULL__'),COALESCE(CAST(tr.Group AS string), '__NULL__'),COALESCE(CAST(ord.SalesOrderID AS string), '__NULL__'))
+      ) ELSE 'NA' END AS order_sk,
+			--md5(cast(concat(coalesce(cast(ord.TerritoryID as string), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(tr.Group as string), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(ord.SalesOrderID as string), '_dbt_utils_surrogate_key_null_')) as string)) AS order_sk,
+			ord.SalesOrderID as SalesOrderID,
+			ord.TerritoryID,
+			tr.Name as TerritoryName,
+			tr.Group as TerritoryGroup,
+			ord.TaxAmt,
+			ord.Freight,
+			ord.TotalDue,
+			ord.Comment,
+			ord.ModifiedDate
+FROM lh_silver.orders  ord
+LEFT JOIN lh_silver.territories  tr
+ON ord.TerritoryID = tr.TerritoryID
+
+)
+
+select * from source_data
+  
+[0m10:35:48.437726 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m10:35:48.441778 [info ] [Thread-1 (]: 12 of 12 OK created sql incremental model lh_gold.order_territory1 ............. [[32mOK[0m in 0.05s]
+[0m10:35:48.442799 [debug] [Thread-1 (]: Finished running node model.dbt_project.order_territory1
+[0m10:35:48.444718 [debug] [MainThread]: On master: ROLLBACK
+[0m10:35:48.444718 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m10:35:48.444718 [debug] [MainThread]: fabricsparknb adapter: Reusing session: 0
+[0m10:35:48.445725 [debug] [MainThread]: fabricsparknb adapter: NotImplemented: rollback
+[0m10:35:48.445725 [debug] [MainThread]: Microsoft Fabric-Spark adapter: NotImplemented: add_begin_query
+[0m10:35:48.445725 [debug] [MainThread]: Microsoft Fabric-Spark adapter: NotImplemented: commit
+[0m10:35:48.445725 [info ] [MainThread]: 
+[0m10:35:48.446894 [info ] [MainThread]: Finished running 12 incremental models in 0 hours 0 minutes and 0.99 seconds (0.99s).
+[0m10:35:48.448911 [debug] [MainThread]: Command end result
+[0m10:35:48.541445 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\manifest.json
+[0m10:35:48.543451 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\semantic_manifest.json
+[0m10:35:48.548444 [debug] [MainThread]: Wrote artifact RunExecutionResult to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\run_results.json
+[0m10:35:48.548444 [info ] [MainThread]: 
+[0m10:35:48.549444 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m10:35:48.549444 [info ] [MainThread]: 
+[0m10:35:48.550444 [info ] [MainThread]: Done. PASS=12 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=12
+[0m10:35:48.550444 [debug] [MainThread]: Command `dbt run` succeeded at 10:35:48.550444 after 2.11 seconds
+[0m10:35:48.550444 [debug] [MainThread]: Flushing usage events
+[0m10:36:00.528982 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 10:36:00.599728 | 5599ee0f-94fd-45d2-b1fc-4d0d9fd5956e ==============================
+[0m10:36:00.599728 [info ] [MainThread]: Running with dbt=1.10.15
+[0m10:36:00.600730 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\fashkani\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt docs generate --static', 'use_colors': 'True', 'use_experimental_parser': 'False', 'log_path': 'C:\\Projects\\Fabric_Framework\\Baseline_Project\\dbt_project\\logs'}
+[0m10:36:00.768832 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting fabricspark.connector to DEBUG
+[0m10:36:00.768832 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting botocore to DEBUG
+[0m10:36:00.769825 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting boto3 to DEBUG
+[0m10:36:00.769825 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting Microsoft Fabric-Spark.connector to DEBUG
+[0m10:36:00.778826 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting fabricsparknb.connector to DEBUG
+[0m10:36:00.778826 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting botocore to DEBUG
+[0m10:36:00.779826 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting boto3 to DEBUG
+[0m10:36:00.779826 [debug] [MainThread]: Microsoft Fabric-Spark adapter: Setting Microsoft Fabric-Spark.connector to DEBUG
+[0m10:36:00.978941 [info ] [MainThread]: Registered adapter: fabricsparknb=1.7.0
+[0m10:36:01.284536 [debug] [MainThread]: checksum: 14a228079bd6df63ba81633f9a3cf44ecfaa31056ac397c602753ec895dbf885, vars: {}, profile: , target: , version: 1.10.15
+[0m10:36:01.435046 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m10:36:01.435046 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m10:36:01.440046 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.dbt_project.bronze
+[0m10:36:01.489105 [info ] [MainThread]: Found 12 models, 6 sources, 612 macros
+[0m10:36:01.491110 [info ] [MainThread]: 
+[0m10:36:01.492134 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m10:36:01.492134 [info ] [MainThread]: 
+[0m10:36:01.493144 [debug] [MainThread]: Acquiring new fabricsparknb connection 'master'
+[0m10:36:01.498209 [debug] [ThreadPool]: Acquiring new fabricsparknb connection 'list_None_lh_gold'
+[0m10:36:01.508144 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_None_lh_gold, now list_None_lh_silver)
+[0m10:36:01.531873 [debug] [Thread-1 (]: Began running node model.dbt_project.cities
+[0m10:36:01.532882 [debug] [Thread-1 (]: Acquiring new fabricsparknb connection 'model.dbt_project.cities'
+[0m10:36:01.532882 [debug] [Thread-1 (]: Began compiling node model.dbt_project.cities
+[0m10:36:01.541893 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.cities"
+[0m10:36:01.542900 [debug] [Thread-1 (]: Began executing node model.dbt_project.cities
+[0m10:36:01.543895 [debug] [Thread-1 (]: Finished running node model.dbt_project.cities
+[0m10:36:01.543895 [debug] [Thread-1 (]: Began running node model.dbt_project.countries
+[0m10:36:01.544900 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.cities, now model.dbt_project.countries)
+[0m10:36:01.544900 [debug] [Thread-1 (]: Began compiling node model.dbt_project.countries
+[0m10:36:01.547900 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.countries"
+[0m10:36:01.547900 [debug] [Thread-1 (]: Began executing node model.dbt_project.countries
+[0m10:36:01.548900 [debug] [Thread-1 (]: Finished running node model.dbt_project.countries
+[0m10:36:01.548900 [debug] [Thread-1 (]: Began running node model.dbt_project.departments
+[0m10:36:01.548900 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.countries, now model.dbt_project.departments)
+[0m10:36:01.549892 [debug] [Thread-1 (]: Began compiling node model.dbt_project.departments
+[0m10:36:01.552893 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.departments"
+[0m10:36:01.552893 [debug] [Thread-1 (]: Began executing node model.dbt_project.departments
+[0m10:36:01.553895 [debug] [Thread-1 (]: Finished running node model.dbt_project.departments
+[0m10:36:01.553895 [debug] [Thread-1 (]: Began running node model.dbt_project.orders
+[0m10:36:01.553895 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.departments, now model.dbt_project.orders)
+[0m10:36:01.555409 [debug] [Thread-1 (]: Began compiling node model.dbt_project.orders
+[0m10:36:01.557424 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.orders"
+[0m10:36:01.558424 [debug] [Thread-1 (]: Began executing node model.dbt_project.orders
+[0m10:36:01.559424 [debug] [Thread-1 (]: Finished running node model.dbt_project.orders
+[0m10:36:01.559424 [debug] [Thread-1 (]: Began running node model.dbt_project.products
+[0m10:36:01.559424 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.orders, now model.dbt_project.products)
+[0m10:36:01.559424 [debug] [Thread-1 (]: Began compiling node model.dbt_project.products
+[0m10:36:01.562509 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.products"
+[0m10:36:01.562509 [debug] [Thread-1 (]: Began executing node model.dbt_project.products
+[0m10:36:01.563510 [debug] [Thread-1 (]: Finished running node model.dbt_project.products
+[0m10:36:01.563510 [debug] [Thread-1 (]: Began running node model.dbt_project.territories
+[0m10:36:01.563510 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.products, now model.dbt_project.territories)
+[0m10:36:01.564510 [debug] [Thread-1 (]: Began compiling node model.dbt_project.territories
+[0m10:36:01.567509 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.territories"
+[0m10:36:01.568509 [debug] [Thread-1 (]: Began executing node model.dbt_project.territories
+[0m10:36:01.568509 [debug] [Thread-1 (]: Finished running node model.dbt_project.territories
+[0m10:36:01.569509 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_cities
+[0m10:36:01.569509 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.territories, now model.dbt_project.dim_cities)
+[0m10:36:01.569509 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_cities
+[0m10:36:01.572510 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_cities"
+[0m10:36:01.573509 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_cities
+[0m10:36:01.573509 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_cities
+[0m10:36:01.573509 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_departments
+[0m10:36:01.574510 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_cities, now model.dbt_project.dim_departments)
+[0m10:36:01.574510 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_departments
+[0m10:36:01.576510 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_departments"
+[0m10:36:01.577510 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_departments
+[0m10:36:01.577510 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_departments
+[0m10:36:01.578510 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_products
+[0m10:36:01.578510 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_departments, now model.dbt_project.dim_products)
+[0m10:36:01.578510 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_products
+[0m10:36:01.581510 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_products"
+[0m10:36:01.581510 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_products
+[0m10:36:01.582509 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_products
+[0m10:36:01.582509 [debug] [Thread-1 (]: Began running node model.dbt_project.dim_territories
+[0m10:36:01.583509 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_products, now model.dbt_project.dim_territories)
+[0m10:36:01.583509 [debug] [Thread-1 (]: Began compiling node model.dbt_project.dim_territories
+[0m10:36:01.585509 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.dim_territories"
+[0m10:36:01.586509 [debug] [Thread-1 (]: Began executing node model.dbt_project.dim_territories
+[0m10:36:01.586509 [debug] [Thread-1 (]: Finished running node model.dbt_project.dim_territories
+[0m10:36:01.587510 [debug] [Thread-1 (]: Began running node model.dbt_project.order_territory
+[0m10:36:01.587510 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.dim_territories, now model.dbt_project.order_territory)
+[0m10:36:01.587510 [debug] [Thread-1 (]: Began compiling node model.dbt_project.order_territory
+[0m10:36:01.590510 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.order_territory"
+[0m10:36:01.591509 [debug] [Thread-1 (]: Began executing node model.dbt_project.order_territory
+[0m10:36:01.591509 [debug] [Thread-1 (]: Finished running node model.dbt_project.order_territory
+[0m10:36:01.591509 [debug] [Thread-1 (]: Began running node model.dbt_project.order_territory1
+[0m10:36:01.592509 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.dbt_project.order_territory, now model.dbt_project.order_territory1)
+[0m10:36:01.592509 [debug] [Thread-1 (]: Began compiling node model.dbt_project.order_territory1
+[0m10:36:01.605644 [debug] [Thread-1 (]: Writing injected SQL for node "model.dbt_project.order_territory1"
+[0m10:36:01.606644 [debug] [Thread-1 (]: Began executing node model.dbt_project.order_territory1
+[0m10:36:01.606644 [debug] [Thread-1 (]: Finished running node model.dbt_project.order_territory1
+[0m10:36:01.608731 [debug] [MainThread]: Command end result
+[0m10:36:01.671181 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\manifest.json
+[0m10:36:01.673188 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\semantic_manifest.json
+[0m10:36:01.679192 [debug] [MainThread]: Wrote artifact RunExecutionResult to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\run_results.json
+[0m10:36:01.682184 [debug] [MainThread]: Re-using an available connection from the pool (formerly master, now generate_catalog)
+[0m10:36:01.682184 [info ] [MainThread]: Building catalog
+[0m10:36:01.693232 [debug] [ThreadPool]: Acquiring new fabricsparknb connection 'lh_gold'
+[0m10:36:01.693232 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.ddl_script_executions
+[0m10:36:01.706246 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.dim_cities
+[0m10:36:01.718240 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.dim_departments
+[0m10:36:01.730311 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.dim_products
+[0m10:36:01.741315 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.dim_territories
+[0m10:36:01.751319 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.order_territory
+[0m10:36:01.763831 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.exec_requests_history
+[0m10:36:01.773832 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.exec_sessions_history
+[0m10:36:01.783831 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.frequently_run_queries
+[0m10:36:01.793831 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.long_running_queries
+[0m10:36:01.803836 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.external_delta_tables
+[0m10:36:01.813831 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.managed_delta_table_checkpoints
+[0m10:36:01.824849 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.managed_delta_table_forks
+[0m10:36:01.834855 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.managed_delta_table_log_files
+[0m10:36:01.845398 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.managed_delta_tables
+[0m10:36:01.854411 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_gold.sys_dw_schemas
+[0m10:36:01.867943 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly lh_gold, now lh_bronze)
+[0m10:36:01.868939 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.cities
+[0m10:36:01.877939 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.countries
+[0m10:36:01.888937 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.countries_backup_20251212_052451
+[0m10:36:01.898939 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.ddl_script_executions
+[0m10:36:01.908939 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.departments
+[0m10:36:01.918939 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.orders
+[0m10:36:01.936938 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.products
+[0m10:36:01.955941 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.territories
+[0m10:36:01.968299 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.exec_requests_history
+[0m10:36:01.980295 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.exec_sessions_history
+[0m10:36:01.991308 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.frequently_run_queries
+[0m10:36:02.002302 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.long_running_queries
+[0m10:36:02.014302 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.external_delta_tables
+[0m10:36:02.024304 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.managed_delta_table_checkpoints
+[0m10:36:02.035302 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.managed_delta_table_forks
+[0m10:36:02.045317 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.managed_delta_table_log_files
+[0m10:36:02.055881 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.managed_delta_tables
+[0m10:36:02.067050 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_bronze.sys_dw_schemas
+[0m10:36:02.081050 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly lh_bronze, now lh_silver)
+[0m10:36:02.081050 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.cities
+[0m10:36:02.092268 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.countries
+[0m10:36:02.103269 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.ddl_script_executions
+[0m10:36:02.166792 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.departments
+[0m10:36:02.177791 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.orders
+[0m10:36:02.187791 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.products
+[0m10:36:02.198794 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.territories
+[0m10:36:02.208792 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.exec_requests_history
+[0m10:36:02.218793 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.exec_sessions_history
+[0m10:36:02.229794 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.frequently_run_queries
+[0m10:36:02.239793 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.long_running_queries
+[0m10:36:02.250805 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.external_delta_tables
+[0m10:36:02.261325 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.managed_delta_table_checkpoints
+[0m10:36:02.271322 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.managed_delta_table_forks
+[0m10:36:02.282321 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.managed_delta_table_log_files
+[0m10:36:02.293323 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.managed_delta_tables
+[0m10:36:02.303325 [debug] [ThreadPool]: fabricsparknb adapter: Getting table schema for relation lh_silver.sys_dw_schemas
+[0m10:36:02.345949 [debug] [MainThread]: Wrote artifact CatalogArtifact to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\catalog.json
+[0m10:36:02.371450 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\manifest.json
+[0m10:36:02.373451 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\semantic_manifest.json
+[0m10:36:02.410629 [info ] [MainThread]: Catalog written to C:\Projects\Fabric_Framework\Baseline_Project\dbt_project\target\catalog.json
+[0m10:36:02.412629 [debug] [MainThread]: Command `dbt docs generate` succeeded at 10:36:02.412629 after 1.95 seconds
+[0m10:36:02.412629 [debug] [MainThread]: Flushing usage events
