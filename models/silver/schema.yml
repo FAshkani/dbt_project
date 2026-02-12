@@ -259,17 +259,17 @@ models:
     data_type: timestamp
     description: ''
 - name: territories
-  description: 'Silver layer table for territories'
+  description: ''
   columns:
   - name: TerritoryID
     data_type: int
-    description: 'Unique identifier for the territory'
+    description: ''
   - name: Name
     data_type: string
     description: ''
   - name: CountryRegionCode
     data_type: string
-    description: 'region code for the country'
+    description: ''
   - name: Group
     data_type: string
     description: ''

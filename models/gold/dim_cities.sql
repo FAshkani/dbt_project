@@ -1,5 +1,5 @@
 {{ config(
-    tags="dim_Cities" 
+    tags="dim_cities" 
 ) }}
 
 {{ config(

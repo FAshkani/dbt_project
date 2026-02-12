@@ -1,5 +1,5 @@
 packages:
-  - git: https://github.com/dbt-labs/dbt-utils.git
-    name: dbt_utils
-    revision: ef562bac8583a3dd041437d1a0ed926d356da4fd
-sha1_hash: 6a9fbec80ec6bc1309cb77501199786b9167fe61
+  - name: dbt_utils
+    package: dbt-labs/dbt_utils
+    version: 1.3.3
+sha1_hash: a4da77dcded39caf20bd661f0098cbffd9735800

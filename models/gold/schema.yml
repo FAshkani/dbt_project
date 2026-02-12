@@ -15,7 +15,7 @@ models:
   - name: update_date
     data_type: timestamp
     description: ''
-- name: dim_Cities
+- name: dim_cities
   description: 'This is the dimension table for cities.'
   columns:
   - name: CityID
@@ -163,14 +163,14 @@ models:
     data_type: timestamp
     description: ''
 - name: dim_territories
-  description: 'gold layer table for territories'
+  description: ''
   columns:
   - name: TerritoryID
     data_type: int
-    description: 'Unique identifier for the territory'
+    description: ''
   - name: Name
     data_type: string
-    description: 'territory name'
+    description: ''
   - name: CountryRegionCode
     data_type: string
     description: ''

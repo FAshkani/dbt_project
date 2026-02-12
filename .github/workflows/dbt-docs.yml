@@ -1,0 +1,65 @@
+
+name: Build & Publish dbt Docs
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-docs:
+    name: Build dbt docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt 
+        run: |
+          python -m pip install --upgrade pip
+          pip install "dbt-bigquery==1.8.*"
+        # For Snowflake: pip install "dbt-snowflake==1.8.*"
+        # For Postgres:  pip install "dbt-postgres==1.8.*"
+        # For Redshift:  pip install "dbt-redshift==1.8.*"
+
+ 
+      - name: Install project dependencies
+        run: dbt deps
+
+
+      - name: Generate docs
+        run: dbt docs generate
+
+      - name: Prepare Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: target  # contains index.html, catalog.json, manifest.json, etc.
+
+  deploy:
+    needs: build-docs
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
