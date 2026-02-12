@@ -44,17 +44,18 @@ jobs:
         run: |
           mkdir -p ~/.dbt
           cat > ~/.dbt/profiles.yml << 'YAML'
-          ci_profile:
-            target: ci
-            outputs:
-              ci:
-                type: duckdb
-                path: ./ci.duckdb
-                schema: analytics
-                threads: 4
-          YAML
+      ci_profile:
+        target: ci
+        outputs:
+          ci:
+            type: duckdb
+            path: ./ci.duckdb
+            schema: analytics
+            threads: 4
+      YAML
           echo "Wrote ~/.dbt/profiles.yml:"
           cat ~/.dbt/profiles.yml
+
 
       # Optional: install dbt packages only if packages.yml exists!!
       
