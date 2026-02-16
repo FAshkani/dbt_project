@@ -1,0 +1,542 @@
+{
+  "metadata": {
+    "colibri_version": "0.2.8",
+    "generated_at": "2026-02-16T06:34:44Z",
+    "adapter_type": "duckdb",
+    "dbt_version": "1.7.19",
+    "dbt_schema_version": "https://schemas.getdbt.com/dbt/manifest/v11.json",
+    "dbt_invocation_id": "1e4f64f9-89ad-43c7-838f-d113dd2f9e64",
+    "dbt_project_name": "dbt_project",
+    "dbt_project_id": "da47dfd9d223591db0b547e52a86ea4f"
+  },
+  "nodes": {
+    "model.dbt_project.territories": {
+      "id": "model.dbt_project.territories",
+      "name": "territories",
+      "fullName": "model.dbt_project.territories",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/territories.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'TerritoryID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ source('bronze','territories') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_bronze\".\"territories\" t1\n)\n\nselect * from source_data",
+      "refs": [],
+      "columns": {}
+    },
+    "model.dbt_project.dim_territories": {
+      "id": "model.dbt_project.dim_territories",
+      "name": "dim_territories",
+      "fullName": "model.dbt_project.dim_territories",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "dimension",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/dim_territories.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'TerritoryID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ ref('territories') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_silver\".\"territories\" t1\n)\n\nselect * from source_data",
+      "refs": [
+        {
+          "name": "territories",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {}
+    },
+    "model.dbt_project.products": {
+      "id": "model.dbt_project.products",
+      "name": "products",
+      "fullName": "model.dbt_project.products",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/products.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'ProductID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ source('bronze','products') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_bronze\".\"products\" t1\n)\n\nselect * from source_data",
+      "refs": [],
+      "columns": {}
+    },
+    "model.dbt_project.dim_products": {
+      "id": "model.dbt_project.dim_products",
+      "name": "dim_products",
+      "fullName": "model.dbt_project.dim_products",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "dimension",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/dim_products.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'ProductID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ ref('products') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_silver\".\"products\" t1\n)\n\nselect * from source_data",
+      "refs": [
+        {
+          "name": "products",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {}
+    },
+    "model.dbt_project.orders": {
+      "id": "model.dbt_project.orders",
+      "name": "orders",
+      "fullName": "model.dbt_project.orders",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/orders.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'SalesOrderID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ source('bronze','orders') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_bronze\".\"orders\" t1\n)\n\nselect * from source_data",
+      "refs": [],
+      "columns": {}
+    },
+    "model.dbt_project.order_territory": {
+      "id": "model.dbt_project.order_territory",
+      "name": "order_territory",
+      "fullName": "model.dbt_project.order_territory",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/order_territory.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'SalesOrderID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n\nSELECT \t\t\n\t\t\tord.SalesOrderID as SalesOrderID,\n\t\t\tord.TerritoryID,\n\t\t\ttr.Name as TerritoryName,\n\t\t\ttr.Group as TerritoryGroup,\n\t\t\tord.TaxAmt,\n\t\t\tord.Freight,\n\t\t\tord.TotalDue,\n\t\t\tord.Comment,\n\t\t\tord.ModifiedDate\nFROM {{ ref('orders') }}  ord\nLEFT JOIN {{ ref('territories') }}  tr\nON ord.TerritoryID = tr.TerritoryID\n\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n\nSELECT \t\t\n\t\t\tord.SalesOrderID as SalesOrderID,\n\t\t\tord.TerritoryID,\n\t\t\ttr.Name as TerritoryName,\n\t\t\ttr.Group as TerritoryGroup,\n\t\t\tord.TaxAmt,\n\t\t\tord.Freight,\n\t\t\tord.TotalDue,\n\t\t\tord.Comment,\n\t\t\tord.ModifiedDate\nFROM \"ci\".\"lh_silver\".\"orders\"  ord\nLEFT JOIN \"ci\".\"lh_silver\".\"territories\"  tr\nON ord.TerritoryID = tr.TerritoryID\n\n)\n\nselect * from source_data",
+      "refs": [
+        {
+          "name": "orders",
+          "package": null,
+          "version": null
+        },
+        {
+          "name": "territories",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {}
+    },
+    "model.dbt_project.order_territory1": {
+      "id": "model.dbt_project.order_territory1",
+      "name": "order_territory1",
+      "fullName": "model.dbt_project.order_territory1",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/order_territory1.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'order_sk',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n\nSELECT \tCASE WHEN ord.SalesOrderID < 50000 THEN\t{{surrogate_key(['ord.TerritoryID', 'tr.Group' , 'ord.SalesOrderID']) }} ELSE 'NA' END AS order_sk,\n\t\t\t--{{  dbt_utils.generate_surrogate_key(['ord.TerritoryID', 'tr.Group' , 'ord.SalesOrderID']) }} AS order_sk,\n\t\t\tord.SalesOrderID as SalesOrderID,\n\t\t\tord.TerritoryID,\n\t\t\ttr.Name as TerritoryName,\n\t\t\ttr.Group as TerritoryGroup,\n\t\t\tord.TaxAmt,\n\t\t\tord.Freight,\n\t\t\tord.TotalDue,\n\t\t\tord.Comment,\n\t\t\tord.ModifiedDate\nFROM {{ ref('orders') }}  ord\nLEFT JOIN {{ ref('territories') }}  tr\nON ord.TerritoryID = tr.TerritoryID\n\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n\nSELECT \tCASE WHEN ord.SalesOrderID < 50000 THEN\t\n \n      MD5(\n        CONCAT_WS(\n          '||',COALESCE(CAST(ord.TerritoryID AS string), '__NULL__'),COALESCE(CAST(tr.Group AS string), '__NULL__'),COALESCE(CAST(ord.SalesOrderID AS string), '__NULL__'))\n      ) ELSE 'NA' END AS order_sk,\n\t\t\t--md5(cast(coalesce(cast(ord.TerritoryID as TEXT), '_dbt_utils_surrogate_key_null_') || '-' || coalesce(cast(tr.Group as TEXT), '_dbt_utils_surrogate_key_null_') || '-' || coalesce(cast(ord.SalesOrderID as TEXT), '_dbt_utils_surrogate_key_null_') as TEXT)) AS order_sk,\n\t\t\tord.SalesOrderID as SalesOrderID,\n\t\t\tord.TerritoryID,\n\t\t\ttr.Name as TerritoryName,\n\t\t\ttr.Group as TerritoryGroup,\n\t\t\tord.TaxAmt,\n\t\t\tord.Freight,\n\t\t\tord.TotalDue,\n\t\t\tord.Comment,\n\t\t\tord.ModifiedDate\nFROM \"ci\".\"lh_silver\".\"orders\"  ord\nLEFT JOIN \"ci\".\"lh_silver\".\"territories\"  tr\nON ord.TerritoryID = tr.TerritoryID\n\n)\n\nselect * from source_data",
+      "refs": [
+        {
+          "name": "orders",
+          "package": null,
+          "version": null
+        },
+        {
+          "name": "territories",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {}
+    },
+    "model.dbt_project.departments": {
+      "id": "model.dbt_project.departments",
+      "name": "departments",
+      "fullName": "model.dbt_project.departments",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/departments.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'DepartmentID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ source('bronze','departments') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_bronze\".\"departments\" t1\n)\n\nselect * from source_data",
+      "refs": [],
+      "columns": {}
+    },
+    "model.dbt_project.dim_departments": {
+      "id": "model.dbt_project.dim_departments",
+      "name": "dim_departments",
+      "fullName": "model.dbt_project.dim_departments",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "dimension",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/dim_departments.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'DepartmentID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ ref('departments') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_silver\".\"departments\" t1\n)\n\nselect * from source_data",
+      "refs": [
+        {
+          "name": "departments",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {}
+    },
+    "model.dbt_project.cities": {
+      "id": "model.dbt_project.cities",
+      "name": "cities",
+      "fullName": "model.dbt_project.cities",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/cities.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'CityID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ source('bronze','cities') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_bronze\".\"cities\" t1\n)\n\nselect * from source_data",
+      "refs": [],
+      "columns": {}
+    },
+    "model.dbt_project.dim_cities": {
+      "id": "model.dbt_project.dim_cities",
+      "name": "dim_cities",
+      "fullName": "model.dbt_project.dim_cities",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "dimension",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/dim_cities.sql",
+      "description": "This is the dimension table for cities.",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n    tags=\"dim_cities\" \n) }}\n\n{{ config(\n        materialized='incremental',\n        unique_key = 'CityID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ ref('cities') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_silver\".\"cities\" t1\n)\n\nselect * from source_data",
+      "refs": [
+        {
+          "name": "cities",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {}
+    },
+    "source.dbt_project.bronze.products": {
+      "id": "source.dbt_project.bronze.products",
+      "name": "products",
+      "fullName": "source.dbt_project.bronze.products",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {}
+    },
+    "source.dbt_project.bronze.orders": {
+      "id": "source.dbt_project.bronze.orders",
+      "name": "orders",
+      "fullName": "source.dbt_project.bronze.orders",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {}
+    },
+    "source.dbt_project.bronze.countries": {
+      "id": "source.dbt_project.bronze.countries",
+      "name": "countries",
+      "fullName": "source.dbt_project.bronze.countries",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {}
+    },
+    "model.dbt_project.countries": {
+      "id": "model.dbt_project.countries",
+      "name": "countries",
+      "fullName": "model.dbt_project.countries",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/countries.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'CountryID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM {{ source('bronze','countries') }} t1\n)\n\nselect * from source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select * FROM \"ci\".\"lh_bronze\".\"countries\" t1\n)\n\nselect * from source_data",
+      "refs": [],
+      "columns": {}
+    },
+    "source.dbt_project.bronze.cities": {
+      "id": "source.dbt_project.bronze.cities",
+      "name": "cities",
+      "fullName": "source.dbt_project.bronze.cities",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {}
+    },
+    "source.dbt_project.bronze.territories": {
+      "id": "source.dbt_project.bronze.territories",
+      "name": "territories",
+      "fullName": "source.dbt_project.bronze.territories",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {}
+    },
+    "source.dbt_project.bronze.departments": {
+      "id": "source.dbt_project.bronze.departments",
+      "name": "departments",
+      "fullName": "source.dbt_project.bronze.departments",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {}
+    }
+  },
+  "lineage": {
+    "edges": [
+      {
+        "id": 1,
+        "source": "model.dbt_project.territories",
+        "target": "model.dbt_project.dim_territories",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 2,
+        "source": "model.dbt_project.products",
+        "target": "model.dbt_project.dim_products",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 3,
+        "source": "model.dbt_project.orders",
+        "target": "model.dbt_project.order_territory",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 4,
+        "source": "model.dbt_project.territories",
+        "target": "model.dbt_project.order_territory",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 5,
+        "source": "model.dbt_project.orders",
+        "target": "model.dbt_project.order_territory1",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 6,
+        "source": "model.dbt_project.territories",
+        "target": "model.dbt_project.order_territory1",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 7,
+        "source": "model.dbt_project.departments",
+        "target": "model.dbt_project.dim_departments",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 8,
+        "source": "model.dbt_project.cities",
+        "target": "model.dbt_project.dim_cities",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 9,
+        "source": "source.dbt_project.bronze.products",
+        "target": "model.dbt_project.products",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 10,
+        "source": "source.dbt_project.bronze.orders",
+        "target": "model.dbt_project.orders",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 11,
+        "source": "source.dbt_project.bronze.countries",
+        "target": "model.dbt_project.countries",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 12,
+        "source": "source.dbt_project.bronze.cities",
+        "target": "model.dbt_project.cities",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 13,
+        "source": "source.dbt_project.bronze.territories",
+        "target": "model.dbt_project.territories",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 14,
+        "source": "source.dbt_project.bronze.departments",
+        "target": "model.dbt_project.departments",
+        "sourceColumn": "",
+        "targetColumn": ""
+      }
+    ],
+    "parents": {},
+    "children": {}
+  },
+  "tree": {
+    "byDatabase": {
+      "ci": {
+        "lh_bronze": [
+          "source.dbt_project.bronze.cities",
+          "source.dbt_project.bronze.countries",
+          "source.dbt_project.bronze.departments",
+          "source.dbt_project.bronze.orders",
+          "source.dbt_project.bronze.products",
+          "source.dbt_project.bronze.territories"
+        ],
+        "lh_gold": [
+          "model.dbt_project.dim_cities",
+          "model.dbt_project.dim_departments",
+          "model.dbt_project.dim_products",
+          "model.dbt_project.dim_territories",
+          "model.dbt_project.order_territory",
+          "model.dbt_project.order_territory1"
+        ],
+        "lh_silver": [
+          "model.dbt_project.cities",
+          "model.dbt_project.countries",
+          "model.dbt_project.departments",
+          "model.dbt_project.orders",
+          "model.dbt_project.products",
+          "model.dbt_project.territories"
+        ]
+      }
+    },
+    "byPath": {
+      "dbt_project": {
+        "models": {
+          "gold": {
+            "__items__": [
+              "model.dbt_project.dim_cities",
+              "model.dbt_project.dim_departments",
+              "model.dbt_project.dim_products",
+              "model.dbt_project.dim_territories",
+              "model.dbt_project.order_territory",
+              "model.dbt_project.order_territory1"
+            ]
+          },
+          "silver": {
+            "__items__": [
+              "model.dbt_project.cities",
+              "model.dbt_project.countries",
+              "model.dbt_project.departments",
+              "model.dbt_project.orders",
+              "model.dbt_project.products",
+              "model.dbt_project.territories"
+            ]
+          }
+        },
+        "sources": {
+          "models": {
+            "bronze": {
+              "lh_bronze": {
+                "__items__": [
+                  "source.dbt_project.bronze.cities",
+                  "source.dbt_project.bronze.countries",
+                  "source.dbt_project.bronze.departments",
+                  "source.dbt_project.bronze.orders",
+                  "source.dbt_project.bronze.products",
+                  "source.dbt_project.bronze.territories"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
