@@ -93,9 +93,7 @@ jobs:
       #    This introspects the local DuckDB empty tables and writes target/catalog.json (with columns).
       # -----------------------------
       - name: Generate dbt Docs (WITH catalog from local DuckDB)
-        run: |
-          set -e
-          dbt docs generate \
+        run: dbt docs generate \
             --static \
             --profiles-dir "$DBT_PROFILES_DIR" \
             --profile ci_profile \
@@ -109,18 +107,7 @@ jobs:
           
       - name:  Commit versioned docs back to repo
         if: ${{ always() }}
-        run: |
-          set -e
-          mkdir -p "docs/$VERSION"
-
-          # Copy dbt docs if present (non-fatal if missing)
-          if [ -f target/static_index.html ]; then
-            cp -f target/static_index.html "docs/$VERSION/index.html"
-          else
-            echo "WARN: target/index.html not found; skipping dbt docs copy"
-          fi
-
-       
+        run: mkdir -p "docs/$VERSION"
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add docs/
@@ -130,7 +117,7 @@ jobs:
       - name: Prepare static site (dbt docs only)
         run: |
           mkdir -p site
-          cp -R target/static_index.html site/
+          cp -R target/* site/
 
       # -----------------------------
       # 9) Configure + Upload to GitHub Pages
