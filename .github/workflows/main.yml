@@ -1,4 +1,4 @@
-name: Build & Publish dbt Docs to GitHub Pages
+name: Build & Publish dbt Docs + Colibri to GitHub Pages
 
 on:
   workflow_dispatch: {}
@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Use an explicit profiles dir and pass it on EVERY dbt call
+      # Explicit profiles dir; we pass it on EVERY dbt call
       DBT_PROFILES_DIR: ${{ github.workspace }}/.dbt
 
     steps:
@@ -50,7 +50,7 @@ jobs:
             outputs:
               ci:
                 type: sqlserver
-                driver: "ODBC Driver 18 for SQL Server"   # <-- REQUIRED
+                driver: "ODBC Driver 18 for SQL Server"  # required by adapter schema
                 host: localhost        # placeholder - not used
                 database: dummy_db     # placeholder - not used
                 schema: analytics
@@ -115,13 +115,30 @@ jobs:
           VERSION=$(date +%Y-%m-%d_%H-%M-%S)
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
+      # === Option 2 behavior: fail loudly if Colibri produced nothing ===
       - name: Generate Colibri Lineage (uses sqlserver manifest)
         run: |
+          set -e
+
+          # Clean + ensure output dir exists
+          rm -rf dist
+          mkdir -p dist
+
           if [ -f target/catalog.json ]; then
+            echo "Running colibri with manifest + catalog..."
             colibri generate --manifest target/manifest.json --catalog target/catalog.json --output-dir dist/
           else
             echo "No catalog.json found; generating lineage from manifest only."
             colibri generate --manifest target/manifest.json --output-dir dist/
+          fi
+
+          echo "Colibri output listing:"
+          ls -la dist || true
+
+          # Hard-fail if dist is missing or empty
+          if [ ! -d dist ] || [ -z "$(ls -A dist 2>/dev/null)" ]; then
+            echo "ERROR: colibri produced no output in dist/. Failing the build."
+            exit 3
           fi
 
       - name: Prepare combined site (dbt + colibri)
@@ -129,7 +146,7 @@ jobs:
           mkdir -p public/dbt public/colibri
           cp -R site/* public/dbt/
           cp -R dist/* public/colibri/
-          # Optional: minimal landing page that links to both sections
+          # Minimal landing page that links to both sections
           cat > public/index.html << 'HTML'
           <!doctype html><html lang="en"><head>
           <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -139,7 +156,7 @@ jobs:
           <h1>Documentation</h1>
           <ul>
             <li><a href="dbt/index.html">dbt Docs (latest)</a></li>
-            <li><a href="colibri/index.html">colibri Column Lineage</a></li>
+            <li><a href="colibri/index.html">Colibri Column Lineage</a></li>
           </ul>
           </body></html>
           HTML
@@ -149,13 +166,23 @@ jobs:
       - name: (Optional) Commit versioned docs back to repo
         if: ${{ always() }}
         run: |
-          mkdir -p docs/"$VERSION"
-          cp -f target/index.html docs/"$VERSION"/dbt_index.html
-          cp -rf dist/* docs/"$VERSION"
+          set -e
+          mkdir -p "docs/$VERSION"
+
+          # Copy dbt docs if present (non-fatal if missing)
+          if [ -f target/index.html ]; then
+            cp -f target/index.html "docs/$VERSION/dbt_index.html"
+          else
+            echo "WARN: target/index.html not found; skipping dbt docs copy"
+          fi
+
+          # Copy Colibri output (guaranteed to exist due to the guard above)
+          cp -rf dist/* "docs/$VERSION"
+
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add docs/
-          git commit -m "Add dbt/colibri docs for $VERSION" || echo"
+          git commit -m "Add dbt/colibri docs for $VERSION" || echo "No changes to commit"
           git push origin "HEAD:${GITHUB_REF_NAME}" || echo "No changes pushed"
 
       - name: Configure Pages
