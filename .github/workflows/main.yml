@@ -1,4 +1,4 @@
-name: Build & Publish dbt Docs + Colibri (Offline, DuckDB)
+name: Build & Publish dbt Docs + Colibri (Offline, DuckDB w/ synthetic catalog)
 
 on:
   workflow_dispatch: {}
@@ -6,7 +6,7 @@ on:
     branches: ["main"]
 
 permissions:
-  contents: write   # needed to commit docs-timestamps back to the repo
+  contents: write
   pages: write
   id-token: write
 
@@ -18,24 +18,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      # Explicit profiles dir; we pass it on EVERY dbt call
       DBT_PROFILES_DIR: ${{ github.workspace }}/.dbt
 
     steps:
+      # -----------------------------
+      # 1) Checkout + Python toolchain
+      # -----------------------------
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dbt (DuckDB) + Colibri
+      - name: Install Python deps (dbt-duckdb, colibri, duckdb runtime, yaml)
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          pip install "dbt-duckdb==1.7.*" dbt-colibri
+          pip install "dbt-duckdb==1.7.*" dbt-colibri duckdb pyyaml
 
+      # -----------------------------
+      # 2) Write a DuckDB-only dbt profile (offline)
+      # -----------------------------
       - name: Write CI profiles.yml (DuckDB; offline)
         run: |
           mkdir -p "$DBT_PROFILES_DIR"
@@ -46,48 +51,85 @@ jobs:
               ci:
                 type: duckdb
                 path: ./ci.duckdb
-                schema: analytics
+                schema: analytics     # logical schema for compiled models
                 threads: 4
           YAML
           echo "WROTE profiles to: $DBT_PROFILES_DIR"
           ls -la "$DBT_PROFILES_DIR" || true
+          echo "------ profiles.yml ------"
+          cat "$DBT_PROFILES_DIR/profiles.yml"
 
-      - name: (Optional) Install dbt packages
+      # -----------------------------
+      # 3) (Optional) dbt deps
+      # -----------------------------
+      - name: Install dbt packages (conditional)
         if: ${{ hashFiles('packages.yml') != '' }}
         run: |
-          dbt deps --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
+          dbt deps \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci
 
+      # -----------------------------
+      # 4) Build manifest (offline parse + compile)
+      # -----------------------------
       - name: Build dbt manifest (offline parse + compile)
         run: |
           set -e
-          dbt parse   --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
-          dbt compile --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
+          dbt parse \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci
+
+          dbt compile \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci
+
           test -f target/manifest.json || (echo "target/manifest.json missing after compile" && exit 3)
 
-      - name: Generate dbt Docs (offline)
+      # (Optional) Guard to prevent SELECT * in compiled SQL
+      # This helps Colibri infer column lineage reliably in offline mode.
+      - name: Guard: reject SELECT * in compiled SQL
+        run: |
+          if grep -R -i --include="*.sql" -n "select[[:space:]]*\*" target 2>/dev/null; then
+            echo "ERROR: Found 'SELECT *' in compiled SQL. Please expand columns explicitly."
+            exit 9
+          fi
+
+      # -----------------------------
+      # 6) Generate dbt Docs WITH catalog (no --empty-catalog)
+      #    This introspects the local DuckDB empty tables and writes target/catalog.json (with columns).
+      # -----------------------------
+      - name: Generate dbt Docs (WITH catalog from local DuckDB)
         run: |
           set -e
           dbt docs generate \
             --profiles-dir "$DBT_PROFILES_DIR" \
             --profile ci_profile \
-            --target ci \
-            --empty-catalog \
-            --static
-          test -f target/index.html || (echo "dbt docs target/index.html missing" && exit 5)
+            --target ci
+          test -f target/catalog.json || (echo "ERROR: target/catalog.json missing" && exit 6)
+          test -f target/index.html  || (echo "ERROR: target/index.html missing" && exit 6)
 
-      - name: Generate Colibri lineage
+      # -----------------------------
+      # 7) Generate Colibri lineage using manifest + catalog
+      # -----------------------------
+      - name: Generate Colibri lineage (manifest + catalog)
         run: |
           set -e
           rm -rf dist
           mkdir -p dist
-          colibri generate --manifest target/manifest.json --output-dir dist/
+          colibri generate --manifest target/manifest.json --catalog target/catalog.json --output-dir dist/
           echo "Colibri output listing:"
           ls -la dist || true
           if [ ! -d dist ] || [ -z "$(ls -A dist 2>/dev/null)" ]; then
-            echo "ERROR: colibri produced no output in dist/. Failing the build."
-            exit 4
+            echo "ERROR: Colibri produced no output in dist/. Failing the build."
+            exit 7
           fi
 
+      # -----------------------------
+      # 8) Assemble combined static site for GitHub Pages
+      # -----------------------------
       - name: Assemble combined site (dbt + colibri)
         run: |
           set -e
@@ -108,7 +150,7 @@ jobs:
           </head><body>
             <h1>Project Documentation</h1>
             <ul>
-              <li><a href="dbt/index.html">dbt Docs (latest)</a></li>
+              <li><a href="dbt/index.html">dbt Docs</a></li>
               <li><a href="colibri/index.html">Colibri Column Lineage</a></li>
             </ul>
           </body></html>
@@ -116,27 +158,37 @@ jobs:
           echo "Combined site structure:"
           find public -maxdepth 2 -type d -print
 
-      - name: Stamp version for repo archive
+
+      - name: Prepare versioned folder path
         run: |
           VERSION=$(date +%Y-%m-%d_%H-%M-%S)
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-          echo "Version stamp: $VERSION"
-
-      - name: Commit timestamped copies under /docs-timestamps
+          
+      - name:  Commit versioned docs back to repo
+        if: ${{ always() }}
         run: |
           set -e
-          mkdir -p "docs-timestamps/$VERSION/dbt" "docs-timestamps/$VERSION/colibri"
-          # Copy dbt docs
-          cp -R target/* "docs-timestamps/$VERSION/dbt/"
-          # Copy Colibri output
-          cp -R dist/* "docs-timestamps/$VERSION/colibri/"
-          # Commit & push
+          mkdir -p "docs/$VERSION"
+
+          # Copy dbt docs if present (non-fatal if missing)
+          if [ -f target/index.html ]; then
+            cp -f target/index.html "docs/$VERSION/dbt_index.html"
+          else
+            echo "WARN: target/index.html not found; skipping dbt docs copy"
+          fi
+
+          # Copy Colibri output (guaranteed to exist due to the guard above)
+          cp -rf dist/* "docs/$VERSION"
+
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add docs-timestamps/
-          git commit -m "Archive docs @ $VERSION (dbt + colibri)" || echo "No changes to commit"
+          git add docs/
+          git commit -m "Add dbt/colibri docs for $VERSION" || echo "No changes to commit"
           git push origin "HEAD:${GITHUB_REF_NAME}" || echo "No changes pushed"
 
+      # -----------------------------
+      # 9) Configure + Upload to GitHub Pages
+      # -----------------------------
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
