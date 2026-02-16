@@ -8,7 +8,29 @@
 
 -- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
 WITH source_data AS (
-    select * FROM {{ ref('territories') }} t1
+select
+  TerritoryID,
+  Name,
+  CountryRegionCode,
+  "Group",
+  SalesYTD,
+  SalesLastYear,
+  CostYTD,
+  CostLastYear,
+  rowguid,
+  ModifiedDate
+from {{ ref('territories') }} t1
 )
 
-select * from source_data
+select
+  TerritoryID,
+  Name,
+  CountryRegionCode,
+  "Group",
+  SalesYTD,
+  SalesLastYear,
+  CostYTD,
+  CostLastYear,
+  rowguid,
+  ModifiedDate
+from  source_data
