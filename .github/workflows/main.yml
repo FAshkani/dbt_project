@@ -108,14 +108,25 @@ jobs:
         run: |
           VERSION=$(date +%Y-%m-%d_%H-%M-%S)
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-          
-      - name:  Commit versioned docs back to repo
+
+
+      - name: Commit versioned dbt docs back to repo
         if: ${{ always() }}
-        run: mkdir -p "docs/$VERSION"
-          cp -rf dist/*.html "docs/$VERSION"
+        run: |
+          set -euo pipefail
+          mkdir -p "docs/$VERSION"
+  
+          # If HTML files exist, copy them; otherwise warn (and don't fail the job)
+          shopt -s nullglob
+          htmls=(dist/*.html)
+          if [ ${#htmls[@]} -gt 0 ]; then
+            cp -f site/*.html "docs/$VERSION"
+          else
+            echo "WARN: No HTML files found in dist/; skipping copy of dist/*.html"
+          fi
+      
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-
           git add docs/
           git commit -m "Add dbt/dbt docs for $VERSION" || echo "No changes to commit"
           git push origin "HEAD:${GITHUB_REF_NAME}" || echo "No changes pushed"
