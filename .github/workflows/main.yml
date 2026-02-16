@@ -100,7 +100,7 @@ jobs:
           set -e
           rm -rf site
           mkdir -p site
-          cp -R target/* site/
+          cp -R target/static_index.html site/
           echo "Listing site/ (must include .html at top level):"
           ls -la site  
           
@@ -114,7 +114,7 @@ jobs:
         if: ${{ always() }}
         run: |
           mkdir -p "docs/$VERSION"
-          cp -f site/*.html "docs/$VERSION"
+          cp -f site/static_index.html "docs/$VERSION"
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add docs/
