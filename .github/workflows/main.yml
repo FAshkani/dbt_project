@@ -93,11 +93,7 @@ jobs:
       #    This introspects the local DuckDB empty tables and writes target/catalog.json (with columns).
       # -----------------------------
       - name: Generate dbt Docs (WITH catalog from local DuckDB)
-        run: dbt docs generate \
-            --static \
-            --profiles-dir "$DBT_PROFILES_DIR" \
-            --profile ci_profile \
-            --target ci
+        run: dbt docs generate --static --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile  --target ci
 
    
       - name: Prepare versioned folder path
