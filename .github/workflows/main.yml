@@ -23,7 +23,7 @@ jobs:
 
     steps:
       # -----------------------------
-      # 1) Checkout + Python toolchain
+      # 1) Checkout + Python tools
       # -----------------------------
       - name: Checkout repo
         uses: actions/checkout@v4
