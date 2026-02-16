@@ -50,6 +50,7 @@ jobs:
             outputs:
               ci:
                 type: sqlserver
+                driver: "ODBC Driver 18 for SQL Server"   # <-- REQUIRED
                 host: localhost        # placeholder - not used
                 database: dummy_db     # placeholder - not used
                 schema: analytics
