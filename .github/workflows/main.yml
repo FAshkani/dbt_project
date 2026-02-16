@@ -64,7 +64,7 @@ jobs:
         run: |
           # DBT_PROFILES_DIR is set at job level; no need for --profiles-dir
           dbt compile --profile ci_profile --target ci
-          dbt docs generate --profile ci_profile --target ci
+          dbt docs generate --profile ci_profile --target ci --static
 
       - name: Verify docs output
         run: |
@@ -86,7 +86,7 @@ jobs:
         if: ${{ always() }}
         run: |
           mkdir -p docs/"$VERSION"
-          cp -r target/* docs/"$VERSION"/
+          cp -r target/static_index.html docs/"$VERSION"/
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add docs/
