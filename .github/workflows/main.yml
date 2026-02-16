@@ -1,4 +1,4 @@
-name: Build & Publish dbt Docs + Colibri (Offline, DuckDB w/ synthetic catalog)
+name: Build & Publish dbt Docs 
 
 on:
   workflow_dispatch: {}
