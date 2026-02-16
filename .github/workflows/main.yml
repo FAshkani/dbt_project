@@ -98,7 +98,7 @@ jobs:
       - name: prepare static site (dbt only)
         run: |
           set -e
-          rm -rf public
+          rm -rf site
           mkdir -p site
           cp -R target/* site/
           echo "Listing site/ (must include .html at top level):"
@@ -113,18 +113,8 @@ jobs:
       - name: Commit versioned dbt docs back to repo
         if: ${{ always() }}
         run: |
-          set -euo pipefail
           mkdir -p "docs/$VERSION"
-  
-          # If HTML files exist, copy them; otherwise warn (and don't fail the job)
-          shopt -s nullglob
-          htmls=(dist/*.html)
-          if [ ${#htmls[@]} -gt 0 ]; then
-            cp -f site/*.html "docs/$VERSION"
-          else
-            echo "WARN: No HTML files found in dist/; skipping copy of dist/*.html"
-          fi
-      
+          cp -f site/*.html "docs/$VERSION"
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add docs/
