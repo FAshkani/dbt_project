@@ -1,11 +1,11 @@
 {
   "metadata": {
     "colibri_version": "0.2.8",
-    "generated_at": "2026-02-16T07:29:46Z",
+    "generated_at": "2026-02-16T07:39:24Z",
     "adapter_type": "duckdb",
     "dbt_version": "1.7.19",
     "dbt_schema_version": "https://schemas.getdbt.com/dbt/manifest/v11.json",
-    "dbt_invocation_id": "3057b5f6-dfcf-46c8-85e3-aa8db1e3c914",
+    "dbt_invocation_id": "021e9d07-bc85-418c-8b3e-22d83420f788",
     "dbt_project_name": "dbt_project",
     "dbt_project_id": "da47dfd9d223591db0b547e52a86ea4f"
   },
