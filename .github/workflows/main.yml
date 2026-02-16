@@ -95,7 +95,10 @@ jobs:
       - name: Generate dbt Docs (WITH catalog from local DuckDB)
         run: dbt docs generate --static --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile  --target ci
 
-   
+      - name: Prepare static site (dbt docs only)
+        run: |
+          mkdir -p site
+          cp -R target/*.html site/   
       - name: Prepare versioned folder path
         run: |
           VERSION=$(date +%Y-%m-%d_%H-%M-%S)
@@ -104,8 +107,10 @@ jobs:
       - name:  Commit versioned docs back to repo
         if: ${{ always() }}
         run: mkdir -p "docs/$VERSION"
+          cp -rf dist/*.html "docs/$VERSION"
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+
           git add docs/
           git commit -m "Add dbt/dbt docs for $VERSION" || echo "No changes to commit"
           git push origin "HEAD:${GITHUB_REF_NAME}" || echo "No changes pushed"
