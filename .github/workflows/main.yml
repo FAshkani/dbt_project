@@ -95,8 +95,6 @@ jobs:
           VERSION=$(date +%Y-%m-%d_%H-%M-%S)
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
-      # NOTE: No patching needed anymore (manifest now has adapter_type: sqlserver)
-
       - name: Generate Colibri Lineage (uses sqlserver manifest)
         run: |
           if [ -f target/catalog.json ]; then
@@ -111,6 +109,20 @@ jobs:
           mkdir -p public/dbt public/colibri
           cp -R site/* public/dbt/
           cp -R dist/* public/colibri/
+          # Optional: simple landing page
+          cat > public/index.html << 'HTML'
+          <!doctype html><html lang="en"><head>
+          <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+          <title>Documentation</title>
+          <style>body{font-family:Arial,Helvetica,sans-serif;margin:40px;line-height:1.5}a{color:#0366d6;text-decoration:none}a:hover{text-decoration:underline}</style>
+          </head><body>
+          <h1>Documentation</h1>
+          <ul>
+            <li><a href="dbt/">dbt Docs (latest)</a></li>
+            <li><a href="colibri/">Column Lineage (colibri)</a></li>
+          </ul>
+          </body></html>
+          HTML
           echo "Combined site structure:"
           find public -maxdepth 2 -type d -print
 
@@ -124,7 +136,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git add docs/
           git commit -m "Add dbt/colibri docs for $VERSION" || echo "No changes to commit"
-          git push || echo "No changes pushed"
+          git push origin "HEAD:${GITHUB_REF_NAME}" || echo "No changes pushed"
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
