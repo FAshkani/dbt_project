@@ -60,12 +60,23 @@ jobs:
       - name: Install dbt packages (conditional)
         if: ${{ hashFiles('packages.yml') != '' }}
         run: dbt deps
-
+        
       - name: Compile & Generate dbt docs
         run: |
-          # DBT_PROFILES_DIR is set at job level; no need for --profiles-dir
-          dbt compile --profile ci_profile --target ci
-          dbt docs generate --static  
+          # Make sure the profiles dir exists and contains profiles.yml
+          test -f "$DBT_PROFILES_DIR/profiles.yml" || { echo "profiles.yml missing in $DBT_PROFILES_DIR"; exit 2; }
+      
+          dbt compile \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci
+      
+          dbt docs generate \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci \
+            --static
+ 
       - name: Verify docs output
         run: |
           test -f target/index.html || (echo "target/index.html is missing" && exit 1)
