@@ -35,12 +35,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
 
-      - name: Install dbt + colibri (DuckDB)
+      - name: Install dbt + colibri (SQL Server)
         run: |
-          pip install "dbt-duckdb==1.7.*"
+          pip install "dbt-sqlserver==1.7.*"
           pip install dbt-colibri
 
-      - name: Write dbt profiles.yml
+      - name: Write dbt profiles.yml (sqlserver; no real DB required)
         run: |
           mkdir -p "$DBT_PROFILES_DIR"
           cat > "$DBT_PROFILES_DIR/profiles.yml" << 'YAML'
@@ -48,35 +48,38 @@ jobs:
             target: ci
             outputs:
               ci:
-                type: duckdb
-                path: ./ci.duckdb
+                type: sqlserver
+                host: localhost        # placeholder - not used
+                database: dummy_db     # placeholder - not used
                 schema: analytics
+                user: dummy_user       # placeholder - not used
+                password: dummy_pwd    # placeholder - not used
+                trust_cert: true
+                port: 1433
                 threads: 4
           YAML
-          echo "Wrote $DBT_PROFILES_DIR/profiles.yml:"
+          echo "Wrote $DBT_PROFILES_DIR/profiles.yml"
+          ls -la "$DBT_PROFILES_DIR"
+          echo "------ profiles.yml ------"
           cat "$DBT_PROFILES_DIR/profiles.yml"
 
       - name: Install dbt packages (conditional)
         if: ${{ hashFiles('packages.yml') != '' }}
-        run: dbt deps --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci  # ⬅️ CHANGED (explicit --profiles-dir)
+        run: dbt deps --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
 
-      - name: Compile & Generate dbt docs
+      - name: Parse, Compile & Generate dbt docs (NO DB connections)
         run: |
+          set -e
           test -f "$DBT_PROFILES_DIR/profiles.yml" || { echo "profiles.yml missing in $DBT_PROFILES_DIR"; exit 2; }
 
-          dbt compile \
-            --profiles-dir "$DBT_PROFILES_DIR" \
-            --profile ci_profile \
-            --target ci
+          # Pure graph build; no warehouse required
+          dbt parse   --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
+          dbt compile --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
 
-          dbt docs generate \
-            --profiles-dir "$DBT_PROFILES_DIR" \
-            --profile ci_profile \
-            --target ci \
-            --static
-          # dbt docs behavior & --static semantics are as documented (may still reference JSON depending on version). [2](https://docs.getdbt.com/docs/core/connect-data-platform/mssql-setup)[3](https://github.com/dbt-msft/dbt-sqlserver)
+          # --empty-catalog skips metadata queries; --static emits single-page-friendly docs
+          dbt docs generate --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci --empty-catalog --static
 
-      - name: Verify docs output
+      - name: Verify dbt docs output
         run: |
           test -f target/index.html || (echo "target/index.html is missing" && exit 1)
           echo "Docs generated. Listing target/:"
@@ -86,26 +89,35 @@ jobs:
         run: |
           mkdir -p site
           cp -R target/* site/
-          # ⬇️ REMOVED the premature 'colibri generate' here (it was overwriting dist) ⬅️ CHANGED
 
       - name: Prepare versioned folder path
         run: |
           VERSION=$(date +%Y-%m-%d_%H-%M-%S)
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
-      - name: Patch manifest for Colibri (Python script)
-        run: python scripts/Patch_docs_manifest_for_Colibri.py
-        # Ensure this script writes: target/manifest.patched.json
+      # NOTE: No patching needed anymore (manifest now has adapter_type: sqlserver)
 
-      - name: Generate Colibri Lineage (single, authoritative run)
-        run: colibri generate --manifest target/manifest.patched.json --catalog target/catalog.json --output-dir dist/  # ⬅️ CHANGED (only run once)
-        # Colibri reads dbt artifacts & writes standalone index.html to output dir. [1](https://pypi.org/project/dbt-fabricspark/)
+      - name: Generate Colibri Lineage (uses sqlserver manifest)
+        run: |
+          if [ -f target/catalog.json ]; then
+            colibri generate --manifest target/manifest.json --catalog target/catalog.json --output-dir dist/
+          else
+            echo "No catalog.json found; generating lineage from manifest only."
+            colibri generate --manifest target/manifest.json --output-dir dist/
+          fi
+
+      - name: Prepare combined site (dbt + colibri)
+        run: |
+          mkdir -p public/dbt public/colibri
+          cp -R site/* public/dbt/
+          cp -R dist/* public/colibri/
+          echo "Combined site structure:"
+          find public -maxdepth 2 -type d -print
 
       - name: (Optional) Commit versioned docs back to repo
         if: ${{ always() }}
         run: |
           mkdir -p docs/"$VERSION"
-          # Fix dbt docs filename: it's 'index.html', not 'static_index.html' ⬅️ CHANGED
           cp -f target/index.html docs/"$VERSION"/dbt_index.html
           cp -rf dist/* docs/"$VERSION"
           git config user.name "github-actions"
@@ -117,11 +129,10 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload docs artifact for Pages
+      - name: Upload Pages artifact (combined)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/   # ⬅️ Unchanged, but now 'dist/' is created by the single, correct Colibri run
-          # If you also want dbt docs on Pages, switch this to 'site/' or publish both via a parent dir. [4](https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/changing-the-visibility-of-your-github-pages-site)
+          path: public/
 
   deploy:
     needs: build
