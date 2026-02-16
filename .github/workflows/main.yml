@@ -100,7 +100,7 @@ jobs:
           set -e
           rm -rf site
           mkdir -p site
-          cp -R target/static_index.html site/
+          cp -R target/* site/
           echo "Listing site/ (must include .html at top level):"
           ls -la site  
           
