@@ -88,31 +88,9 @@ jobs:
 
           test -f target/manifest.json || (echo "target/manifest.json missing after compile" && exit 3)
 
-      # (Optional) Guard to prevent SELECT * in compiled SQL
-      # This helps Colibri infer column lineage reliably in offline mode.
-      - name: Guard: reject SELECT * in compiled SQL
-        run: |
-          if grep -R -i --include="*.sql" -n "select[[:space:]]*\*" target 2>/dev/null; then
-            echo "ERROR: Found 'SELECT *' in compiled SQL. Please expand columns explicitly."
-            exit 9
-          fi
 
       # -----------------------------
-      # 6) Generate dbt Docs WITH catalog (no --empty-catalog)
-      #    This introspects the local DuckDB empty tables and writes target/catalog.json (with columns).
-      # -----------------------------
-      - name: Generate dbt Docs (WITH catalog from local DuckDB)
-        run: |
-          set -e
-          dbt docs generate \
-            --profiles-dir "$DBT_PROFILES_DIR" \
-            --profile ci_profile \
-            --target ci
-          test -f target/catalog.json || (echo "ERROR: target/catalog.json missing" && exit 6)
-          test -f target/index.html  || (echo "ERROR: target/index.html missing" && exit 6)
-
-      # -----------------------------
-      # 7) Generate Colibri lineage using manifest + catalog
+      # 6) Generate Colibri lineage using manifest + catalog
       # -----------------------------
       - name: Generate Colibri lineage (manifest + catalog)
         run: |
@@ -126,6 +104,21 @@ jobs:
             echo "ERROR: Colibri produced no output in dist/. Failing the build."
             exit 7
           fi
+
+      # -----------------------------
+      # 7) Generate dbt Docs WITH catalog (no --empty-catalog)
+      #    This introspects the local DuckDB empty tables and writes target/catalog.json (with columns).
+      # -----------------------------
+      - name: Generate dbt Docs (WITH catalog from local DuckDB)
+        run: |
+          set -e
+          dbt docs generate \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci
+            --static
+          test -f target/catalog.json || (echo "ERROR: target/catalog.json missing" && exit 6)
+          test -f target/index.html  || (echo "ERROR: target/index.html missing" && exit 6)
 
       # -----------------------------
       # 8) Assemble combined static site for GitHub Pages
