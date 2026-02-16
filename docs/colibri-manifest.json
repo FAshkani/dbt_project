@@ -1,0 +1,2096 @@
+{
+  "metadata": {
+    "colibri_version": "0.2.8",
+    "generated_at": "2026-02-16T07:29:46Z",
+    "adapter_type": "duckdb",
+    "dbt_version": "1.7.19",
+    "dbt_schema_version": "https://schemas.getdbt.com/dbt/manifest/v11.json",
+    "dbt_invocation_id": "3057b5f6-dfcf-46c8-85e3-aa8db1e3c914",
+    "dbt_project_name": "dbt_project",
+    "dbt_project_id": "da47dfd9d223591db0b547e52a86ea4f"
+  },
+  "nodes": {
+    "model.dbt_project.territories": {
+      "id": "model.dbt_project.territories",
+      "name": "territories",
+      "fullName": "model.dbt_project.territories",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/territories.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'TerritoryID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  TerritoryID,\n  Name,\n  CountryRegionCode,\n  \"Group\",\n  SalesYTD,\n  SalesLastYear,\n  CostYTD,\n  CostLastYear,\n  rowguid,\n  ModifiedDate\nfrom {{ source('bronze','territories') }} t1\n)\nselect\n  TerritoryID,\n  Name,\n  CountryRegionCode,\n  \"Group\",\n  SalesYTD,\n  SalesLastYear,\n  CostYTD,\n  CostLastYear,\n  rowguid,\n  ModifiedDate\nfrom   source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  TerritoryID,\n  Name,\n  CountryRegionCode,\n  \"Group\",\n  SalesYTD,\n  SalesLastYear,\n  CostYTD,\n  CostLastYear,\n  rowguid,\n  ModifiedDate\nfrom \"ci\".\"lh_bronze\".\"territories\" t1\n)\nselect\n  TerritoryID,\n  Name,\n  CountryRegionCode,\n  \"Group\",\n  SalesYTD,\n  SalesLastYear,\n  CostYTD,\n  CostLastYear,\n  rowguid,\n  ModifiedDate\nfrom   source_data",
+      "refs": [],
+      "columns": {
+        "territoryid": {
+          "columnName": "territoryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "name": {
+          "columnName": "name",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "countryregioncode": {
+          "columnName": "countryregioncode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "group": {
+          "columnName": "group",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "salesytd": {
+          "columnName": "salesytd",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "saleslastyear": {
+          "columnName": "saleslastyear",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "costytd": {
+          "columnName": "costytd",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "costlastyear": {
+          "columnName": "costlastyear",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "rowguid": {
+          "columnName": "rowguid",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.dim_territories": {
+      "id": "model.dbt_project.dim_territories",
+      "name": "dim_territories",
+      "fullName": "model.dbt_project.dim_territories",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "dimension",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/dim_territories.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'TerritoryID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  TerritoryID,\n  Name,\n  CountryRegionCode,\n  \"Group\",\n  SalesYTD,\n  SalesLastYear,\n  CostYTD,\n  CostLastYear,\n  rowguid,\n  ModifiedDate\nfrom {{ ref('territories') }} t1\n)\n\nselect\n  TerritoryID,\n  Name,\n  CountryRegionCode,\n  \"Group\",\n  SalesYTD,\n  SalesLastYear,\n  CostYTD,\n  CostLastYear,\n  rowguid,\n  ModifiedDate\nfrom  source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  TerritoryID,\n  Name,\n  CountryRegionCode,\n  \"Group\",\n  SalesYTD,\n  SalesLastYear,\n  CostYTD,\n  CostLastYear,\n  rowguid,\n  ModifiedDate\nfrom \"ci\".\"lh_silver\".\"territories\" t1\n)\n\nselect\n  TerritoryID,\n  Name,\n  CountryRegionCode,\n  \"Group\",\n  SalesYTD,\n  SalesLastYear,\n  CostYTD,\n  CostLastYear,\n  rowguid,\n  ModifiedDate\nfrom  source_data",
+      "refs": [
+        {
+          "name": "territories",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {
+        "territoryid": {
+          "columnName": "territoryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "name": {
+          "columnName": "name",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "countryregioncode": {
+          "columnName": "countryregioncode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "group": {
+          "columnName": "group",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "salesytd": {
+          "columnName": "salesytd",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "saleslastyear": {
+          "columnName": "saleslastyear",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "costytd": {
+          "columnName": "costytd",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "costlastyear": {
+          "columnName": "costlastyear",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "rowguid": {
+          "columnName": "rowguid",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.products": {
+      "id": "model.dbt_project.products",
+      "name": "products",
+      "fullName": "model.dbt_project.products",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/products.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'ProductID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  ProductID,\n  ProductName,\n  Brand,\n  Size,\n  RecommendedRetailPrice,\n  TypicalWeightPerUnit,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom {{ source('bronze','products') }} t1\n)\n\nselect\n  ProductID,\n  ProductName,\n  Brand,\n  Size,\n  RecommendedRetailPrice,\n  TypicalWeightPerUnit,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom   source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  ProductID,\n  ProductName,\n  Brand,\n  Size,\n  RecommendedRetailPrice,\n  TypicalWeightPerUnit,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom \"ci\".\"lh_bronze\".\"products\" t1\n)\n\nselect\n  ProductID,\n  ProductName,\n  Brand,\n  Size,\n  RecommendedRetailPrice,\n  TypicalWeightPerUnit,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom   source_data",
+      "refs": [],
+      "columns": {
+        "productid": {
+          "columnName": "productid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "name": {
+          "columnName": "name",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "productnumber": {
+          "columnName": "productnumber",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "makeflag": {
+          "columnName": "makeflag",
+          "hasLineage": false,
+          "dataType": "boolean",
+          "contractType": "boolean",
+          "description": ""
+        },
+        "finishedgoodsflag": {
+          "columnName": "finishedgoodsflag",
+          "hasLineage": false,
+          "dataType": "boolean",
+          "contractType": "boolean",
+          "description": ""
+        },
+        "color": {
+          "columnName": "color",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "safetystocklevel": {
+          "columnName": "safetystocklevel",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "reorderpoint": {
+          "columnName": "reorderpoint",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "standardcost": {
+          "columnName": "standardcost",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "listprice": {
+          "columnName": "listprice",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "size": {
+          "columnName": "size",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "sizeunitmeasurecode": {
+          "columnName": "sizeunitmeasurecode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "weightunitmeasurecode": {
+          "columnName": "weightunitmeasurecode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "weight": {
+          "columnName": "weight",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "daystomanufacture": {
+          "columnName": "daystomanufacture",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "productline": {
+          "columnName": "productline",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "class": {
+          "columnName": "class",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "style": {
+          "columnName": "style",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "productsubcategoryid": {
+          "columnName": "productsubcategoryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "productmodelid": {
+          "columnName": "productmodelid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "sellstartdate": {
+          "columnName": "sellstartdate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "sellenddate": {
+          "columnName": "sellenddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "discontinueddate": {
+          "columnName": "discontinueddate",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "rowguid": {
+          "columnName": "rowguid",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.dim_products": {
+      "id": "model.dbt_project.dim_products",
+      "name": "dim_products",
+      "fullName": "model.dbt_project.dim_products",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "dimension",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/dim_products.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'ProductID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  ProductID,\n  Name,\n  ProductNumber,\n  MakeFlag,\n  FinishedGoodsFlag,\n  Color,\n  SafetyStockLevel,\n  ReorderPoint,\n  StandardCost,\n  ListPrice,\n  Size,\n  SizeUnitMeasureCode,\n  WeightUnitMeasureCode,\n  Weight,\n  DaysToManufacture,\n  ProductLine,\n  Class,\n  Style,\n  ProductSubcategoryID,\n  ProductModelID,\n  SellStartDate,\n  SellEndDate,\n  DiscontinuedDate,\n  rowguid,\n  ModifiedDate\nfrom {{ ref('products') }} t1\n)\n\nselect\n  ProductID,\n  Name,\n  ProductNumber,\n  MakeFlag,\n  FinishedGoodsFlag,\n  Color,\n  SafetyStockLevel,\n  ReorderPoint,\n  StandardCost,\n  ListPrice,\n  Size,\n  SizeUnitMeasureCode,\n  WeightUnitMeasureCode,\n  Weight,\n  DaysToManufacture,\n  ProductLine,\n  Class,\n  Style,\n  ProductSubcategoryID,\n  ProductModelID,\n  SellStartDate,\n  SellEndDate,\n  DiscontinuedDate,\n  rowguid,\n  ModifiedDate\nfrom  source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  ProductID,\n  Name,\n  ProductNumber,\n  MakeFlag,\n  FinishedGoodsFlag,\n  Color,\n  SafetyStockLevel,\n  ReorderPoint,\n  StandardCost,\n  ListPrice,\n  Size,\n  SizeUnitMeasureCode,\n  WeightUnitMeasureCode,\n  Weight,\n  DaysToManufacture,\n  ProductLine,\n  Class,\n  Style,\n  ProductSubcategoryID,\n  ProductModelID,\n  SellStartDate,\n  SellEndDate,\n  DiscontinuedDate,\n  rowguid,\n  ModifiedDate\nfrom \"ci\".\"lh_silver\".\"products\" t1\n)\n\nselect\n  ProductID,\n  Name,\n  ProductNumber,\n  MakeFlag,\n  FinishedGoodsFlag,\n  Color,\n  SafetyStockLevel,\n  ReorderPoint,\n  StandardCost,\n  ListPrice,\n  Size,\n  SizeUnitMeasureCode,\n  WeightUnitMeasureCode,\n  Weight,\n  DaysToManufacture,\n  ProductLine,\n  Class,\n  Style,\n  ProductSubcategoryID,\n  ProductModelID,\n  SellStartDate,\n  SellEndDate,\n  DiscontinuedDate,\n  rowguid,\n  ModifiedDate\nfrom  source_data",
+      "refs": [
+        {
+          "name": "products",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {
+        "productid": {
+          "columnName": "productid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "name": {
+          "columnName": "name",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "productnumber": {
+          "columnName": "productnumber",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "makeflag": {
+          "columnName": "makeflag",
+          "hasLineage": false,
+          "dataType": "boolean",
+          "contractType": "boolean",
+          "description": ""
+        },
+        "finishedgoodsflag": {
+          "columnName": "finishedgoodsflag",
+          "hasLineage": false,
+          "dataType": "boolean",
+          "contractType": "boolean",
+          "description": ""
+        },
+        "color": {
+          "columnName": "color",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "safetystocklevel": {
+          "columnName": "safetystocklevel",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "reorderpoint": {
+          "columnName": "reorderpoint",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "standardcost": {
+          "columnName": "standardcost",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "listprice": {
+          "columnName": "listprice",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "size": {
+          "columnName": "size",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "sizeunitmeasurecode": {
+          "columnName": "sizeunitmeasurecode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "weightunitmeasurecode": {
+          "columnName": "weightunitmeasurecode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "weight": {
+          "columnName": "weight",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "daystomanufacture": {
+          "columnName": "daystomanufacture",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "productline": {
+          "columnName": "productline",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "class": {
+          "columnName": "class",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "style": {
+          "columnName": "style",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "productsubcategoryid": {
+          "columnName": "productsubcategoryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "productmodelid": {
+          "columnName": "productmodelid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "sellstartdate": {
+          "columnName": "sellstartdate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "sellenddate": {
+          "columnName": "sellenddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "discontinueddate": {
+          "columnName": "discontinueddate",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "rowguid": {
+          "columnName": "rowguid",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.orders": {
+      "id": "model.dbt_project.orders",
+      "name": "orders",
+      "fullName": "model.dbt_project.orders",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/orders.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'SalesOrderID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  SalesOrderID,\n  RevisionNumber,\n  OrderDate,\n  DueDate,\n  ShipDate,\n  Status,\n  OnlineOrderFlag,\n  SalesOrderNumber,\n  PurchaseOrderNumber,\n  AccountNumber,\n  CustomerID,\n  SalesPersonID,\n  TerritoryID,\n  BillToAddressID,\n  ShipToAddressID,\n  ShipMethodID,\n  CreditCardID,\n  CreditCardApprovalCode,\n  CurrencyRateID,\n  SubTotal,\n  TaxAmt,\n  Freight,\n  TotalDue,\n  Comment,\n  rowguid,\n  ModifiedDate\nfrom {{ source('bronze','orders') }} t1\n)\n\nselect\n  SalesOrderID,\n  RevisionNumber,\n  OrderDate,\n  DueDate,\n  ShipDate,\n  Status,\n  OnlineOrderFlag,\n  SalesOrderNumber,\n  PurchaseOrderNumber,\n  AccountNumber,\n  CustomerID,\n  SalesPersonID,\n  TerritoryID,\n  BillToAddressID,\n  ShipToAddressID,\n  ShipMethodID,\n  CreditCardID,\n  CreditCardApprovalCode,\n  CurrencyRateID,\n  SubTotal,\n  TaxAmt,\n  Freight,\n  TotalDue,\n  Comment,\n  rowguid,\n  ModifiedDate\n \nfrom  source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  SalesOrderID,\n  RevisionNumber,\n  OrderDate,\n  DueDate,\n  ShipDate,\n  Status,\n  OnlineOrderFlag,\n  SalesOrderNumber,\n  PurchaseOrderNumber,\n  AccountNumber,\n  CustomerID,\n  SalesPersonID,\n  TerritoryID,\n  BillToAddressID,\n  ShipToAddressID,\n  ShipMethodID,\n  CreditCardID,\n  CreditCardApprovalCode,\n  CurrencyRateID,\n  SubTotal,\n  TaxAmt,\n  Freight,\n  TotalDue,\n  Comment,\n  rowguid,\n  ModifiedDate\nfrom \"ci\".\"lh_bronze\".\"orders\" t1\n)\n\nselect\n  SalesOrderID,\n  RevisionNumber,\n  OrderDate,\n  DueDate,\n  ShipDate,\n  Status,\n  OnlineOrderFlag,\n  SalesOrderNumber,\n  PurchaseOrderNumber,\n  AccountNumber,\n  CustomerID,\n  SalesPersonID,\n  TerritoryID,\n  BillToAddressID,\n  ShipToAddressID,\n  ShipMethodID,\n  CreditCardID,\n  CreditCardApprovalCode,\n  CurrencyRateID,\n  SubTotal,\n  TaxAmt,\n  Freight,\n  TotalDue,\n  Comment,\n  rowguid,\n  ModifiedDate\n \nfrom  source_data",
+      "refs": [],
+      "columns": {
+        "salesorderid": {
+          "columnName": "salesorderid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "revisionnumber": {
+          "columnName": "revisionnumber",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "orderdate": {
+          "columnName": "orderdate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "duedate": {
+          "columnName": "duedate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "shipdate": {
+          "columnName": "shipdate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "status": {
+          "columnName": "status",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "onlineorderflag": {
+          "columnName": "onlineorderflag",
+          "hasLineage": false,
+          "dataType": "boolean",
+          "contractType": "boolean",
+          "description": ""
+        },
+        "salesordernumber": {
+          "columnName": "salesordernumber",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "purchaseordernumber": {
+          "columnName": "purchaseordernumber",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "accountnumber": {
+          "columnName": "accountnumber",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "customerid": {
+          "columnName": "customerid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "salespersonid": {
+          "columnName": "salespersonid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "territoryid": {
+          "columnName": "territoryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "billtoaddressid": {
+          "columnName": "billtoaddressid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "shiptoaddressid": {
+          "columnName": "shiptoaddressid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "shipmethodid": {
+          "columnName": "shipmethodid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "creditcardid": {
+          "columnName": "creditcardid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "creditcardapprovalcode": {
+          "columnName": "creditcardapprovalcode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "currencyrateid": {
+          "columnName": "currencyrateid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "subtotal": {
+          "columnName": "subtotal",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "taxamt": {
+          "columnName": "taxamt",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "freight": {
+          "columnName": "freight",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "totaldue": {
+          "columnName": "totaldue",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "comment": {
+          "columnName": "comment",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "rowguid": {
+          "columnName": "rowguid",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.order_territory": {
+      "id": "model.dbt_project.order_territory",
+      "name": "order_territory",
+      "fullName": "model.dbt_project.order_territory",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/order_territory.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'SalesOrderID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n\nSELECT \t\t\n\t\t\tord.SalesOrderID as SalesOrderID,\n\t\t\tord.TerritoryID,\n\t\t\ttr.Name as TerritoryName,\n\t\t\ttr.Group as TerritoryGroup,\n\t\t\tord.TaxAmt,\n\t\t\tord.Freight,\n\t\t\tord.TotalDue,\n\t\t\tord.Comment,\n\t\t\tord.ModifiedDate\nFROM {{ ref('orders') }}  ord\nLEFT JOIN {{ ref('territories') }}  tr\nON ord.TerritoryID = tr.TerritoryID\n\n)\n\nSELECT \t\t\n\t\t\tSalesOrderID as SalesOrderID,\n\t\t\tTerritoryID,\n\t\t\tName as TerritoryName,\n\t\t\t'Group' as TerritoryGroup,\n\t\t\tTaxAmt,\n\t\t\tFreight,\n\t\t\tTotalDue,\n\t\t\tComment,\n\t\t\tModifiedDate\nfrom source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n\nSELECT \t\t\n\t\t\tord.SalesOrderID as SalesOrderID,\n\t\t\tord.TerritoryID,\n\t\t\ttr.Name as TerritoryName,\n\t\t\ttr.Group as TerritoryGroup,\n\t\t\tord.TaxAmt,\n\t\t\tord.Freight,\n\t\t\tord.TotalDue,\n\t\t\tord.Comment,\n\t\t\tord.ModifiedDate\nFROM \"ci\".\"lh_silver\".\"orders\"  ord\nLEFT JOIN \"ci\".\"lh_silver\".\"territories\"  tr\nON ord.TerritoryID = tr.TerritoryID\n\n)\n\nSELECT \t\t\n\t\t\tSalesOrderID as SalesOrderID,\n\t\t\tTerritoryID,\n\t\t\tName as TerritoryName,\n\t\t\t'Group' as TerritoryGroup,\n\t\t\tTaxAmt,\n\t\t\tFreight,\n\t\t\tTotalDue,\n\t\t\tComment,\n\t\t\tModifiedDate\nfrom source_data",
+      "refs": [
+        {
+          "name": "orders",
+          "package": null,
+          "version": null
+        },
+        {
+          "name": "territories",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {
+        "salesorderid": {
+          "columnName": "salesorderid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "territoryid": {
+          "columnName": "territoryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "territoryname": {
+          "columnName": "territoryname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "territorygroup": {
+          "columnName": "territorygroup",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "taxamt": {
+          "columnName": "taxamt",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "freight": {
+          "columnName": "freight",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "totaldue": {
+          "columnName": "totaldue",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "comment": {
+          "columnName": "comment",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.order_territory1": {
+      "id": "model.dbt_project.order_territory1",
+      "name": "order_territory1",
+      "fullName": "model.dbt_project.order_territory1",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/order_territory1.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'order_sk',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n\nSELECT \tCASE WHEN ord.SalesOrderID < 50000 THEN\t{{surrogate_key(['ord.TerritoryID', 'tr.Group' , 'ord.SalesOrderID']) }} ELSE 'NA' END AS order_sk,\n\t\t\t--{{  dbt_utils.generate_surrogate_key(['ord.TerritoryID', 'tr.Group' , 'ord.SalesOrderID']) }} AS order_sk,\n\t\t\tord.SalesOrderID as SalesOrderID,\n\t\t\tord.TerritoryID,\n\t\t\ttr.Name as TerritoryName,\n\t\t\ttr.Group as TerritoryGroup,\n\t\t\tord.TaxAmt,\n\t\t\tord.Freight,\n\t\t\tord.TotalDue,\n\t\t\tord.Comment,\n\t\t\tord.ModifiedDate\nFROM {{ ref('orders') }}  ord\nLEFT JOIN {{ ref('territories') }}  tr\nON ord.TerritoryID = tr.TerritoryID\n\n)\n\nSELECT \t    order_sk,\n\t\t\tSalesOrderID as SalesOrderID,\n\t\t\tTerritoryID,\n\t\t\t.Name as TerritoryName,\n\t\t\t'Group' as TerritoryGroup,\n\t\t\tTaxAmt,\n\t\t\tFreight,\n\t\t\tTotalDue,\n\t\t\tComment,\n\t\t\tModifiedDate\nfrom source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n\nSELECT \tCASE WHEN ord.SalesOrderID < 50000 THEN\t\n \n      MD5(\n        CONCAT_WS(\n          '||',COALESCE(CAST(ord.TerritoryID AS string), '__NULL__'),COALESCE(CAST(tr.Group AS string), '__NULL__'),COALESCE(CAST(ord.SalesOrderID AS string), '__NULL__'))\n      ) ELSE 'NA' END AS order_sk,\n\t\t\t--md5(cast(coalesce(cast(ord.TerritoryID as TEXT), '_dbt_utils_surrogate_key_null_') || '-' || coalesce(cast(tr.Group as TEXT), '_dbt_utils_surrogate_key_null_') || '-' || coalesce(cast(ord.SalesOrderID as TEXT), '_dbt_utils_surrogate_key_null_') as TEXT)) AS order_sk,\n\t\t\tord.SalesOrderID as SalesOrderID,\n\t\t\tord.TerritoryID,\n\t\t\ttr.Name as TerritoryName,\n\t\t\ttr.Group as TerritoryGroup,\n\t\t\tord.TaxAmt,\n\t\t\tord.Freight,\n\t\t\tord.TotalDue,\n\t\t\tord.Comment,\n\t\t\tord.ModifiedDate\nFROM \"ci\".\"lh_silver\".\"orders\"  ord\nLEFT JOIN \"ci\".\"lh_silver\".\"territories\"  tr\nON ord.TerritoryID = tr.TerritoryID\n\n)\n\nSELECT \t    order_sk,\n\t\t\tSalesOrderID as SalesOrderID,\n\t\t\tTerritoryID,\n\t\t\t.Name as TerritoryName,\n\t\t\t'Group' as TerritoryGroup,\n\t\t\tTaxAmt,\n\t\t\tFreight,\n\t\t\tTotalDue,\n\t\t\tComment,\n\t\t\tModifiedDate\nfrom source_data",
+      "refs": [
+        {
+          "name": "orders",
+          "package": null,
+          "version": null
+        },
+        {
+          "name": "territories",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {}
+    },
+    "model.dbt_project.departments": {
+      "id": "model.dbt_project.departments",
+      "name": "departments",
+      "fullName": "model.dbt_project.departments",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/departments.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'DepartmentID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select\n  DepartmentID,\n  DepartmentName,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom {{ source('bronze','departments') }} t1\n)\n\nselect\n  DepartmentID,\n  DepartmentName,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom  source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select\n  DepartmentID,\n  DepartmentName,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom \"ci\".\"lh_bronze\".\"departments\" t1\n)\n\nselect\n  DepartmentID,\n  DepartmentName,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom  source_data",
+      "refs": [],
+      "columns": {
+        "departmentid": {
+          "columnName": "departmentid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "name": {
+          "columnName": "name",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "groupname": {
+          "columnName": "groupname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.dim_departments": {
+      "id": "model.dbt_project.dim_departments",
+      "name": "dim_departments",
+      "fullName": "model.dbt_project.dim_departments",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "dimension",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/dim_departments.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'DepartmentID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  DepartmentID,\n  Name,\n  GroupName,\n  ModifiedDate\nfrom {{ ref('departments') }} t1\n)\n\nselect\n  DepartmentID,\n  Name,\n  GroupName,\n  ModifiedDate\nfrom  source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  DepartmentID,\n  Name,\n  GroupName,\n  ModifiedDate\nfrom \"ci\".\"lh_silver\".\"departments\" t1\n)\n\nselect\n  DepartmentID,\n  Name,\n  GroupName,\n  ModifiedDate\nfrom  source_data",
+      "refs": [
+        {
+          "name": "departments",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {
+        "departmentid": {
+          "columnName": "departmentid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "name": {
+          "columnName": "name",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "groupname": {
+          "columnName": "groupname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.cities": {
+      "id": "model.dbt_project.cities",
+      "name": "cities",
+      "fullName": "model.dbt_project.cities",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/cities.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'CityID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select\n  CityID,\n  CityName,\n  StateProvinceID,\n  LatestRecordedPopulation,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom {{ source('bronze','cities') }} t1\n)\n\nselect\n  CityID,\n  CityName,\n  StateProvinceID,\n  LatestRecordedPopulation,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select\n  CityID,\n  CityName,\n  StateProvinceID,\n  LatestRecordedPopulation,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom \"ci\".\"lh_bronze\".\"cities\" t1\n)\n\nselect\n  CityID,\n  CityName,\n  StateProvinceID,\n  LatestRecordedPopulation,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom source_data",
+      "refs": [],
+      "columns": {
+        "cityid": {
+          "columnName": "cityid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "cityname": {
+          "columnName": "cityname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "stateprovinceid": {
+          "columnName": "stateprovinceid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "latestrecordedpopulation": {
+          "columnName": "latestrecordedpopulation",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "lasteditedby": {
+          "columnName": "lasteditedby",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "validfrom": {
+          "columnName": "validfrom",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "validto": {
+          "columnName": "validto",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.dim_cities": {
+      "id": "model.dbt_project.dim_cities",
+      "name": "dim_cities",
+      "fullName": "model.dbt_project.dim_cities",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "dimension",
+      "database": "ci",
+      "schema": "lh_gold",
+      "path": "models/gold/dim_cities.sql",
+      "description": "This is the dimension table for cities.",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n    tags=\"dim_cities\" \n) }}\n\n{{ config(\n        materialized='incremental',\n        unique_key = 'CityID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  CityID,\n  CityName,\n  StateProvinceID,\n  LatestRecordedPopulation,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom {{ ref('cities') }} t1\n)\n\nselect\n  CityID,\n  CityName,\n  StateProvinceID,\n  LatestRecordedPopulation,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom  source_data",
+      "compiledCode": "\n\n\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\nselect\n  CityID,\n  CityName,\n  StateProvinceID,\n  LatestRecordedPopulation,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom \"ci\".\"lh_silver\".\"cities\" t1\n)\n\nselect\n  CityID,\n  CityName,\n  StateProvinceID,\n  LatestRecordedPopulation,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo\nfrom  source_data",
+      "refs": [
+        {
+          "name": "cities",
+          "package": null,
+          "version": null
+        }
+      ],
+      "columns": {
+        "cityid": {
+          "columnName": "cityid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "cityname": {
+          "columnName": "cityname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "stateprovinceid": {
+          "columnName": "stateprovinceid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "latestrecordedpopulation": {
+          "columnName": "latestrecordedpopulation",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "lasteditedby": {
+          "columnName": "lasteditedby",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "validfrom": {
+          "columnName": "validfrom",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "validto": {
+          "columnName": "validto",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "source.dbt_project.bronze.products": {
+      "id": "source.dbt_project.bronze.products",
+      "name": "products",
+      "fullName": "source.dbt_project.bronze.products",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {
+        "productid": {
+          "columnName": "productid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "name": {
+          "columnName": "name",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "productnumber": {
+          "columnName": "productnumber",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "makeflag": {
+          "columnName": "makeflag",
+          "hasLineage": false,
+          "dataType": "boolean"
+        },
+        "finishedgoodsflag": {
+          "columnName": "finishedgoodsflag",
+          "hasLineage": false,
+          "dataType": "boolean"
+        },
+        "color": {
+          "columnName": "color",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "safetystocklevel": {
+          "columnName": "safetystocklevel",
+          "hasLineage": false,
+          "dataType": "int"
+        },
+        "reorderpoint": {
+          "columnName": "reorderpoint",
+          "hasLineage": false,
+          "dataType": "int"
+        },
+        "standardcost": {
+          "columnName": "standardcost",
+          "hasLineage": false,
+          "dataType": "float"
+        },
+        "listprice": {
+          "columnName": "listprice",
+          "hasLineage": false,
+          "dataType": "float"
+        },
+        "size": {
+          "columnName": "size",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "sizeunitmeasurecode": {
+          "columnName": "sizeunitmeasurecode",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "weightunitmeasurecode": {
+          "columnName": "weightunitmeasurecode",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "weight": {
+          "columnName": "weight",
+          "hasLineage": false,
+          "dataType": "float"
+        },
+        "daystomanufacture": {
+          "columnName": "daystomanufacture",
+          "hasLineage": false,
+          "dataType": "int"
+        },
+        "productline": {
+          "columnName": "productline",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "class": {
+          "columnName": "class",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "style": {
+          "columnName": "style",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "productsubcategoryid": {
+          "columnName": "productsubcategoryid",
+          "hasLineage": false,
+          "dataType": "int"
+        },
+        "productmodelid": {
+          "columnName": "productmodelid",
+          "hasLineage": false,
+          "dataType": "int"
+        },
+        "sellstartdate": {
+          "columnName": "sellstartdate",
+          "hasLineage": false,
+          "dataType": "timestamp"
+        },
+        "sellenddate": {
+          "columnName": "sellenddate",
+          "hasLineage": false,
+          "dataType": "timestamp"
+        },
+        "discontinueddate": {
+          "columnName": "discontinueddate",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "rowguid": {
+          "columnName": "rowguid",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp"
+        }
+      }
+    },
+    "source.dbt_project.bronze.orders": {
+      "id": "source.dbt_project.bronze.orders",
+      "name": "orders",
+      "fullName": "source.dbt_project.bronze.orders",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {
+        "salesorderid": {
+          "columnName": "salesorderid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "revisionnumber": {
+          "columnName": "revisionnumber",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "orderdate": {
+          "columnName": "orderdate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "duedate": {
+          "columnName": "duedate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "shipdate": {
+          "columnName": "shipdate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "status": {
+          "columnName": "status",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "onlineorderflag": {
+          "columnName": "onlineorderflag",
+          "hasLineage": false,
+          "dataType": "boolean",
+          "contractType": "boolean",
+          "description": ""
+        },
+        "salesordernumber": {
+          "columnName": "salesordernumber",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "purchaseordernumber": {
+          "columnName": "purchaseordernumber",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "accountnumber": {
+          "columnName": "accountnumber",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "customerid": {
+          "columnName": "customerid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "salespersonid": {
+          "columnName": "salespersonid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "territoryid": {
+          "columnName": "territoryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "billtoaddressid": {
+          "columnName": "billtoaddressid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "shiptoaddressid": {
+          "columnName": "shiptoaddressid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "shipmethodid": {
+          "columnName": "shipmethodid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "creditcardid": {
+          "columnName": "creditcardid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "creditcardapprovalcode": {
+          "columnName": "creditcardapprovalcode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "currencyrateid": {
+          "columnName": "currencyrateid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "subtotal": {
+          "columnName": "subtotal",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "taxamt": {
+          "columnName": "taxamt",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "freight": {
+          "columnName": "freight",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "totaldue": {
+          "columnName": "totaldue",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "comment": {
+          "columnName": "comment",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "rowguid": {
+          "columnName": "rowguid",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "source.dbt_project.bronze.countries": {
+      "id": "source.dbt_project.bronze.countries",
+      "name": "countries",
+      "fullName": "source.dbt_project.bronze.countries",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {
+        "countryid": {
+          "columnName": "countryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "countryname": {
+          "columnName": "countryname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "formalname": {
+          "columnName": "formalname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "isoalpha3code": {
+          "columnName": "isoalpha3code",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "isonumericcode": {
+          "columnName": "isonumericcode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "countrytype": {
+          "columnName": "countrytype",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "latestrecordedpopulation": {
+          "columnName": "latestrecordedpopulation",
+          "hasLineage": false,
+          "dataType": "bigint",
+          "contractType": "bigint",
+          "description": ""
+        },
+        "continent": {
+          "columnName": "continent",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "region": {
+          "columnName": "region",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "subregion": {
+          "columnName": "subregion",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "lasteditedby": {
+          "columnName": "lasteditedby",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "validfrom": {
+          "columnName": "validfrom",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "validto": {
+          "columnName": "validto",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "happinessindex": {
+          "columnName": "happinessindex",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        }
+      }
+    },
+    "model.dbt_project.countries": {
+      "id": "model.dbt_project.countries",
+      "name": "countries",
+      "fullName": "model.dbt_project.countries",
+      "nodeType": "model",
+      "materialized": "incremental",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_silver",
+      "path": "models/silver/countries.sql",
+      "description": "",
+      "contractEnforced": false,
+      "rawCode": "{{ config(\n        materialized='incremental',\n        unique_key = 'CountryID',\n        incremental_strategy='merge',\n        file_format='delta'\n        ) \n}}\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select\n  CountryID,\n  CountryName,\n  FormalName,\n  IsoAlpha3Code,\n  IsoNumericCode,\n  CountryType,\n  LatestRecordedPopulation,\n  Continent,\n  Region,\n  Subregion,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo,\n  HappinessIndex\nfrom {{ source('bronze','countries') }} t1\n)\n\nselect\n  CountryID,\n  CountryName,\n  FormalName,\n  IsoAlpha3Code,\n  IsoNumericCode,\n  CountryType,\n  LatestRecordedPopulation,\n  Continent,\n  Region,\n  Subregion,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo,\n  HappinessIndex\nfrom   source_data",
+      "compiledCode": "\n\n-- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION\nWITH source_data AS (\n    select\n  CountryID,\n  CountryName,\n  FormalName,\n  IsoAlpha3Code,\n  IsoNumericCode,\n  CountryType,\n  LatestRecordedPopulation,\n  Continent,\n  Region,\n  Subregion,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo,\n  HappinessIndex\nfrom \"ci\".\"lh_bronze\".\"countries\" t1\n)\n\nselect\n  CountryID,\n  CountryName,\n  FormalName,\n  IsoAlpha3Code,\n  IsoNumericCode,\n  CountryType,\n  LatestRecordedPopulation,\n  Continent,\n  Region,\n  Subregion,\n  LastEditedBy,\n  ValidFrom,\n  ValidTo,\n  HappinessIndex\nfrom   source_data",
+      "refs": [],
+      "columns": {
+        "countryid": {
+          "columnName": "countryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "countryname": {
+          "columnName": "countryname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "formalname": {
+          "columnName": "formalname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "isoalpha3code": {
+          "columnName": "isoalpha3code",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "isonumericcode": {
+          "columnName": "isonumericcode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "countrytype": {
+          "columnName": "countrytype",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "latestrecordedpopulation": {
+          "columnName": "latestrecordedpopulation",
+          "hasLineage": false,
+          "dataType": "bigint",
+          "contractType": "bigint",
+          "description": ""
+        },
+        "continent": {
+          "columnName": "continent",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "region": {
+          "columnName": "region",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "subregion": {
+          "columnName": "subregion",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "lasteditedby": {
+          "columnName": "lasteditedby",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "validfrom": {
+          "columnName": "validfrom",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "validto": {
+          "columnName": "validto",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "happinessindex": {
+          "columnName": "happinessindex",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        }
+      }
+    },
+    "source.dbt_project.bronze.cities": {
+      "id": "source.dbt_project.bronze.cities",
+      "name": "cities",
+      "fullName": "source.dbt_project.bronze.cities",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {
+        "cityid": {
+          "columnName": "cityid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "cityname": {
+          "columnName": "cityname",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "stateprovinceid": {
+          "columnName": "stateprovinceid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "latestrecordedpopulation": {
+          "columnName": "latestrecordedpopulation",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "lasteditedby": {
+          "columnName": "lasteditedby",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "validfrom": {
+          "columnName": "validfrom",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        },
+        "validto": {
+          "columnName": "validto",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "source.dbt_project.bronze.territories": {
+      "id": "source.dbt_project.bronze.territories",
+      "name": "territories",
+      "fullName": "source.dbt_project.bronze.territories",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {
+        "territoryid": {
+          "columnName": "territoryid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "name": {
+          "columnName": "name",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "countryregioncode": {
+          "columnName": "countryregioncode",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "group": {
+          "columnName": "group",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "salesytd": {
+          "columnName": "salesytd",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "saleslastyear": {
+          "columnName": "saleslastyear",
+          "hasLineage": false,
+          "dataType": "float",
+          "contractType": "float",
+          "description": ""
+        },
+        "costytd": {
+          "columnName": "costytd",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "costlastyear": {
+          "columnName": "costlastyear",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "rowguid": {
+          "columnName": "rowguid",
+          "hasLineage": false,
+          "dataType": "string",
+          "contractType": "string",
+          "description": ""
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp",
+          "contractType": "timestamp",
+          "description": ""
+        }
+      }
+    },
+    "source.dbt_project.bronze.departments": {
+      "id": "source.dbt_project.bronze.departments",
+      "name": "departments",
+      "fullName": "source.dbt_project.bronze.departments",
+      "nodeType": "source",
+      "materialized": "unknown",
+      "modelType": "unknown",
+      "database": "ci",
+      "schema": "lh_bronze",
+      "path": "models/bronze/schema.yml",
+      "description": "",
+      "contractEnforced": null,
+      "rawCode": null,
+      "compiledCode": null,
+      "refs": [],
+      "columns": {
+        "departmentid": {
+          "columnName": "departmentid",
+          "hasLineage": false,
+          "dataType": "int",
+          "contractType": "int",
+          "description": ""
+        },
+        "name": {
+          "columnName": "name",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "groupname": {
+          "columnName": "groupname",
+          "hasLineage": false,
+          "dataType": "string"
+        },
+        "modifieddate": {
+          "columnName": "modifieddate",
+          "hasLineage": false,
+          "dataType": "timestamp"
+        }
+      }
+    }
+  },
+  "lineage": {
+    "edges": [
+      {
+        "id": 1,
+        "source": "model.dbt_project.territories",
+        "target": "model.dbt_project.dim_territories",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 2,
+        "source": "model.dbt_project.products",
+        "target": "model.dbt_project.dim_products",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 3,
+        "source": "model.dbt_project.orders",
+        "target": "model.dbt_project.order_territory",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 4,
+        "source": "model.dbt_project.territories",
+        "target": "model.dbt_project.order_territory",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 5,
+        "source": "model.dbt_project.orders",
+        "target": "model.dbt_project.order_territory1",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 6,
+        "source": "model.dbt_project.territories",
+        "target": "model.dbt_project.order_territory1",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 7,
+        "source": "model.dbt_project.departments",
+        "target": "model.dbt_project.dim_departments",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 8,
+        "source": "model.dbt_project.cities",
+        "target": "model.dbt_project.dim_cities",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 9,
+        "source": "source.dbt_project.bronze.products",
+        "target": "model.dbt_project.products",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 10,
+        "source": "source.dbt_project.bronze.orders",
+        "target": "model.dbt_project.orders",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 11,
+        "source": "source.dbt_project.bronze.countries",
+        "target": "model.dbt_project.countries",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 12,
+        "source": "source.dbt_project.bronze.cities",
+        "target": "model.dbt_project.cities",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 13,
+        "source": "source.dbt_project.bronze.territories",
+        "target": "model.dbt_project.territories",
+        "sourceColumn": "",
+        "targetColumn": ""
+      },
+      {
+        "id": 14,
+        "source": "source.dbt_project.bronze.departments",
+        "target": "model.dbt_project.departments",
+        "sourceColumn": "",
+        "targetColumn": ""
+      }
+    ],
+    "parents": {},
+    "children": {}
+  },
+  "tree": {
+    "byDatabase": {
+      "ci": {
+        "lh_bronze": [
+          "source.dbt_project.bronze.cities",
+          "source.dbt_project.bronze.countries",
+          "source.dbt_project.bronze.departments",
+          "source.dbt_project.bronze.orders",
+          "source.dbt_project.bronze.products",
+          "source.dbt_project.bronze.territories"
+        ],
+        "lh_gold": [
+          "model.dbt_project.dim_cities",
+          "model.dbt_project.dim_departments",
+          "model.dbt_project.dim_products",
+          "model.dbt_project.dim_territories",
+          "model.dbt_project.order_territory",
+          "model.dbt_project.order_territory1"
+        ],
+        "lh_silver": [
+          "model.dbt_project.cities",
+          "model.dbt_project.countries",
+          "model.dbt_project.departments",
+          "model.dbt_project.orders",
+          "model.dbt_project.products",
+          "model.dbt_project.territories"
+        ]
+      }
+    },
+    "byPath": {
+      "dbt_project": {
+        "models": {
+          "gold": {
+            "__items__": [
+              "model.dbt_project.dim_cities",
+              "model.dbt_project.dim_departments",
+              "model.dbt_project.dim_products",
+              "model.dbt_project.dim_territories",
+              "model.dbt_project.order_territory",
+              "model.dbt_project.order_territory1"
+            ]
+          },
+          "silver": {
+            "__items__": [
+              "model.dbt_project.cities",
+              "model.dbt_project.countries",
+              "model.dbt_project.departments",
+              "model.dbt_project.orders",
+              "model.dbt_project.products",
+              "model.dbt_project.territories"
+            ]
+          }
+        },
+        "sources": {
+          "models": {
+            "bronze": {
+              "lh_bronze": {
+                "__items__": [
+                  "source.dbt_project.bronze.cities",
+                  "source.dbt_project.bronze.countries",
+                  "source.dbt_project.bronze.departments",
+                  "source.dbt_project.bronze.orders",
+                  "source.dbt_project.bronze.products",
+                  "source.dbt_project.bronze.territories"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
