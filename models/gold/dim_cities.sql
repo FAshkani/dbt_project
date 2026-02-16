@@ -1,4 +1,8 @@
 {{ config(
+    tags="dim_cities" 
+) }}
+
+{{ config(
         materialized='incremental',
         unique_key = 'CityID',
         incremental_strategy='merge',
@@ -8,7 +12,7 @@
 
 -- CTE to rank CDC records by Id, meta_ExtractedDate, and SYS_CHANGE_VERSION
 WITH source_data AS (
-    select
+select
   CityID,
   CityName,
   StateProvinceID,
@@ -16,7 +20,7 @@ WITH source_data AS (
   LastEditedBy,
   ValidFrom,
   ValidTo
-from {{ source('bronze','cities') }} t1
+from {{ ref('cities') }} t1
 )
 
 select
@@ -27,4 +31,4 @@ select
   LastEditedBy,
   ValidFrom,
   ValidTo
-from source_data
+from  source_data
