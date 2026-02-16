@@ -18,6 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      # Use an explicit profiles dir and pass it on EVERY dbt call
       DBT_PROFILES_DIR: ${{ github.workspace }}/.dbt
 
     steps:
@@ -58,26 +59,44 @@ jobs:
                 port: 1433
                 threads: 4
           YAML
-          echo "Wrote $DBT_PROFILES_DIR/profiles.yml"
-          ls -la "$DBT_PROFILES_DIR"
+          echo "WROTE profiles to: $DBT_PROFILES_DIR"
+          ls -la "$DBT_PROFILES_DIR" || true
           echo "------ profiles.yml ------"
           cat "$DBT_PROFILES_DIR/profiles.yml"
 
       - name: Install dbt packages (conditional)
         if: ${{ hashFiles('packages.yml') != '' }}
-        run: dbt deps --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
+        run: |
+          dbt deps \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci
 
       - name: Parse, Compile & Generate dbt docs (NO DB connections)
         run: |
           set -e
+          echo "DBT_PROFILES_DIR=$DBT_PROFILES_DIR"
+          ls -la "$DBT_PROFILES_DIR" || true
           test -f "$DBT_PROFILES_DIR/profiles.yml" || { echo "profiles.yml missing in $DBT_PROFILES_DIR"; exit 2; }
 
           # Pure graph build; no warehouse required
-          dbt parse   --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
-          dbt compile --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
+          dbt parse \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci
+
+          dbt compile \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci
 
           # --empty-catalog skips metadata queries; --static emits single-page-friendly docs
-          dbt docs generate --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci --empty-catalog --static
+          dbt docs generate \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci \
+            --empty-catalog \
+            --static
 
       - name: Verify dbt docs output
         run: |
@@ -109,7 +128,7 @@ jobs:
           mkdir -p public/dbt public/colibri
           cp -R site/* public/dbt/
           cp -R dist/* public/colibri/
-          # Optional: simple landing page
+          # Optional: minimal landing page that links to both sections
           cat > public/index.html << 'HTML'
           <!doctype html><html lang="en"><head>
           <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -118,8 +137,8 @@ jobs:
           </head><body>
           <h1>Documentation</h1>
           <ul>
-            <li><a href="dbt/">dbt Docs (latest)</a></li>
-            <li><a href="colibri/">Column Lineage (colibri)</a></li>
+            <li><a href="dbt/index.html">dbt Docs (latest)</a></li>
+            <li><a href="colibri/index.html">colibri Column Lineage</a></li>
           </ul>
           </body></html>
           HTML
@@ -135,7 +154,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add docs/
-          git commit -m "Add dbt/colibri docs for $VERSION" || echo "No changes to commit"
+          git commit -m "Add dbt/colibri docs for $VERSION" || echo"
           git push origin "HEAD:${GITHUB_REF_NAME}" || echo "No changes pushed"
 
       - name: Configure Pages
