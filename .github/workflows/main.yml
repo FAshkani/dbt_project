@@ -1,4 +1,4 @@
-name: Publish Colibri Lineage (Offline, DuckDB)
+name: Build & Publish dbt Docs + Colibri (Offline, DuckDB)
 
 on:
   workflow_dispatch: {}
@@ -6,7 +6,7 @@ on:
     branches: ["main"]
 
 permissions:
-  contents: read
+  contents: write   # needed to commit docs-timestamps back to the repo
   pages: write
   id-token: write
 
@@ -23,18 +23,20 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dbt + colibri (DuckDB only; offline)
+      - name: Install dbt (DuckDB) + Colibri
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install "dbt-duckdb==1.7.*" dbt-colibri
 
-      - name: Write CI profiles.yml (DuckDB)
+      - name: Write CI profiles.yml (DuckDB; offline)
         run: |
           mkdir -p "$DBT_PROFILES_DIR"
           cat > "$DBT_PROFILES_DIR/profiles.yml" << 'YAML'
@@ -50,12 +52,28 @@ jobs:
           echo "WROTE profiles to: $DBT_PROFILES_DIR"
           ls -la "$DBT_PROFILES_DIR" || true
 
+      - name: (Optional) Install dbt packages
+        if: ${{ hashFiles('packages.yml') != '' }}
+        run: |
+          dbt deps --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
+
       - name: Build dbt manifest (offline parse + compile)
         run: |
           set -e
           dbt parse   --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
           dbt compile --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile --target ci
           test -f target/manifest.json || (echo "target/manifest.json missing after compile" && exit 3)
+
+      - name: Generate dbt Docs (offline)
+        run: |
+          set -e
+          dbt docs generate \
+            --profiles-dir "$DBT_PROFILES_DIR" \
+            --profile ci_profile \
+            --target ci \
+            --empty-catalog \
+            --static
+          test -f target/index.html || (echo "dbt docs target/index.html missing" && exit 5)
 
       - name: Generate Colibri lineage
         run: |
@@ -70,13 +88,62 @@ jobs:
             exit 4
           fi
 
+      - name: Assemble combined site (dbt + colibri)
+        run: |
+          set -e
+          rm -rf public
+          mkdir -p public/dbt public/colibri
+          cp -R target/* public/dbt/
+          cp -R dist/* public/colibri/
+          # Simple landing page
+          cat > public/index.html << 'HTML'
+          <!doctype html><html lang="en"><head>
+            <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+            <title>Documentation</title>
+            <style>
+              body{font-family:Arial,Helvetica,sans-serif;margin:40px;line-height:1.6}
+              a{color:#0366d6;text-decoration:none}a:hover{text-decoration:underline}
+              ul{margin-left:0;padding-left:18px}
+            </style>
+          </head><body>
+            <h1>Project Documentation</h1>
+            <ul>
+              <li><a href="dbt/index.html">dbt Docs (latest)</a></li>
+              <li><a href="colibri/index.html">Colibri Column Lineage</a></li>
+            </ul>
+          </body></html>
+          HTML
+          echo "Combined site structure:"
+          find public -maxdepth 2 -type d -print
+
+      - name: Stamp version for repo archive
+        run: |
+          VERSION=$(date +%Y-%m-%d_%H-%M-%S)
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "Version stamp: $VERSION"
+
+      - name: Commit timestamped copies under /docs-timestamps
+        run: |
+          set -e
+          mkdir -p "docs-timestamps/$VERSION/dbt" "docs-timestamps/$VERSION/colibri"
+          # Copy dbt docs
+          cp -R target/* "docs-timestamps/$VERSION/dbt/"
+          # Copy Colibri output
+          cp -R dist/* "docs-timestamps/$VERSION/colibri/"
+          # Commit & push
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add docs-timestamps/
+          git commit -m "Archive docs @ $VERSION (dbt + colibri)" || echo "No changes to commit"
+          git push origin "HEAD:${GITHUB_REF_NAME}" || echo "No changes pushed"
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload Pages artifact (Colibri only)
+      - name: Upload Pages artifact (combined)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/
+          path: public/
 
   deploy:
     needs: build
