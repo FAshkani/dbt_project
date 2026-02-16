@@ -26,4 +26,14 @@ ON ord.TerritoryID = tr.TerritoryID
 
 )
 
-select * from source_data
+SELECT 	    order_sk,
+			SalesOrderID as SalesOrderID,
+			TerritoryID,
+			.Name as TerritoryName,
+			'Group' as TerritoryGroup,
+			TaxAmt,
+			Freight,
+			TotalDue,
+			Comment,
+			ModifiedDate
+from source_data
