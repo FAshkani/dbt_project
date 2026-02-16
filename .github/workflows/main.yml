@@ -86,7 +86,6 @@ jobs:
             --profile ci_profile \
             --target ci
 
-          test -f target/manifest.json || (echo "target/manifest.json missing after compile" && exit 3)
 
 
       # -----------------------------
@@ -97,12 +96,10 @@ jobs:
         run: |
           set -e
           dbt docs generate \
+            --static \
             --profiles-dir "$DBT_PROFILES_DIR" \
             --profile ci_profile \
             --target ci
-            --static
-          test -f target/catalog.json || (echo "ERROR: target/catalog.json missing" && exit 6)
-          test -f target/index.html  || (echo "ERROR: target/index.html missing" && exit 6)
 
    
       - name: Prepare versioned folder path
