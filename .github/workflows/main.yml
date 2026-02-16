@@ -96,9 +96,8 @@ jobs:
         run: dbt docs generate --static --profiles-dir "$DBT_PROFILES_DIR" --profile ci_profile  --target ci
 
       - name: Prepare static site (dbt docs only)
-        run: 2
-          mkdir -p site
-          cp -R target/* site/   
+        run: mkdir -p site
+             cp -R target/* site/   
       - name: Prepare versioned folder path
         run: |
           VERSION=$(date +%Y-%m-%d_%H-%M-%S)
