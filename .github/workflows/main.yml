@@ -114,7 +114,7 @@ jobs:
         if: ${{ always() }}
         run: |
           mkdir -p "dbt_docs/$VERSION"
-          cp -f site/static_index.html "docs/$VERSION"
+          cp -f site/static_index.html "dbt_docs/$VERSION"
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add dbt_docs/
