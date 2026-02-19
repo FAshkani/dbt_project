@@ -113,12 +113,12 @@ jobs:
       - name: Commit versioned dbt docs back to repo
         if: ${{ always() }}
         run: |
-          mkdir -p "dbt_docs/$VERSION"
-          cp -f site/static_index.html "dbt_docs/$VERSION"
+          mkdir -p "docs/$VERSION"
+          cp -f site/static_index.html "docs/$VERSION"
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add dbt_docs/
-          git commit -m "Add dbt dbt_docs for $VERSION" || echo "No changes to commit"
+          git add docs/
+          git commit -m "Add dbt/dbt docs for $VERSION" || echo "No changes to commit"
           git push origin "HEAD:${GITHUB_REF_NAME}" || echo "No changes pushed"
 
       # -----------------------------
