@@ -70,22 +70,6 @@ jobs:
             --profile ci_profile \
             --target ci
 
-      # -----------------------------
-      # 4) Build manifest (offline parse + compile)
-      # -----------------------------
-      - name: Build dbt manifest (offline parse + compile)
-        run: |
-          set -e
-          dbt parse \
-            --profiles-dir "$DBT_PROFILES_DIR" \
-            --profile ci_profile \
-            --target ci
-
-          dbt compile \
-            --profiles-dir "$DBT_PROFILES_DIR" \
-            --profile ci_profile \
-            --target ci
-
 
 
       # -----------------------------
